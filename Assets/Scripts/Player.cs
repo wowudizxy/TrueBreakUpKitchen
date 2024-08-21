@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    
     private bool isWalking = false;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private GameInput gameInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal,0,vertical).normalized;
+        Vector3 direction = gameInput.GetMovementDirectionNormalized();
         isWalking = direction!= Vector3.zero;
         transform.position += direction * Time.deltaTime * moveSpeed;
         if (direction != Vector3.zero)
