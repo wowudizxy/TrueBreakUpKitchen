@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+    [SerializeField] private LayerMask counterLayerMask;
     private bool isWalking = false;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 10f;
@@ -14,7 +15,16 @@ public class Player : MonoBehaviour
     {
         
     }
+    private void Update ()
+    {
+        HandleInteraction();
+    }
     private void FixedUpdate ()
+    {
+        HandleMovement();
+    }
+
+    private void HandleMovement ()
     {
         Vector3 direction = gameInput.GetMovementDirectionNormalized();
         isWalking = direction != Vector3.zero;
@@ -23,7 +33,16 @@ public class Player : MonoBehaviour
         {
             transform.forward = Vector3.Slerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
         }
-
+    }
+    private void HandleInteraction ()
+    {
+        if(Physics.Raycast(transform.position,transform.forward,out RaycastHit hit, 2f, counterLayerMask))
+        {
+            if(hit.collider.TryGetComponent<ClearCounter>(out ClearCounter counter))
+            {
+                counter.Interact();
+            }
+        }
     }
     public bool IsWalking
     {
