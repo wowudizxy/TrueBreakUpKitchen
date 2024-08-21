@@ -14,18 +14,16 @@ public class Player : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate ()
     {
         Vector3 direction = gameInput.GetMovementDirectionNormalized();
-        isWalking = direction!= Vector3.zero;
+        isWalking = direction != Vector3.zero;
         transform.position += direction * Time.deltaTime * moveSpeed;
         if (direction != Vector3.zero)
         {
             transform.forward = Vector3.Slerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
         }
-        
+
     }
     public bool IsWalking
     {
