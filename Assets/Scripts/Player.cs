@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private bool isWalking = false;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 10f;
     // Start is called before the first frame update
@@ -18,12 +19,16 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal,0,vertical).normalized;
+        isWalking = direction!= Vector3.zero;
         transform.position += direction * Time.deltaTime * moveSpeed;
         if (direction != Vector3.zero)
         {
-            
             transform.forward = Vector3.Slerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
         }
         
+    }
+    public bool IsWalking
+    {
+        get { return isWalking; }
     }
 }
