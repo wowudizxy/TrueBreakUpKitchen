@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private ClearCounter selectCounter;
     [SerializeField] private LayerMask counterLayerMask;
     private bool isWalking = false;
     [SerializeField] private float moveSpeed = 7f;
@@ -18,12 +19,12 @@ public class Player : MonoBehaviour
 
     private void GameInput_InteractHandler (object sender, EventArgs e)
     {
-        HandleInteraction();
+        selectCounter?.Interact();
     }
 
     private void Update ()
     {
-        
+        HandleInteraction();
     }
     private void FixedUpdate ()
     {
@@ -46,12 +47,29 @@ public class Player : MonoBehaviour
         {
             if(hit.collider.TryGetComponent<ClearCounter>(out ClearCounter counter))
             {
-                counter.Interact();
+                SetSelectCounter(counter);
             }
+            else
+            {
+                SetSelectCounter(null);
+            }
+        }
+        else
+        {
+            SetSelectCounter(null);
         }
     }
     public bool IsWalking
     {
         get { return isWalking; }
+    }
+    private void SetSelectCounter (ClearCounter counter)
+    {
+        if (counter != selectCounter)
+        {
+            selectCounter?.CancelSelect();
+            counter?.SelectCounter();
+            selectCounter = counter;
+        }
     }
 }
