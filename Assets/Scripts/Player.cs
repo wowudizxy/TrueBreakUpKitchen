@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private GameInput gameInput;
     // Start is called before the first frame update
+    Vector3 direction;
     void Start()
     {
         gameInput.InteractHandler += GameInput_InteractHandler;//3订阅这个事件InteractHandler，当事件被触发时调用GameInput_InteractHandler方法
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 
     private void Update ()
     {
+        direction = gameInput.GetMovementDirectionNormalized();
         HandleInteraction();
     }
     private void FixedUpdate ()
@@ -33,8 +35,8 @@ public class Player : MonoBehaviour
 
     private void HandleMovement ()
     {
-        Vector3 direction = gameInput.GetMovementDirectionNormalized();
-        isWalking = direction != Vector3.zero;
+        
+        
         transform.position += direction * Time.deltaTime * moveSpeed;
         if (direction != Vector3.zero)
         {
