@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5695819366861120609}
   m_Layer: 0
-  m_Name: Point
+  m_Name: HoldPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,10 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a970cf763e3dfb147bcef6e7067c9f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdPoint: {fileID: 5695819366861120609}
+  targetCounter: {fileID: 0}
   selectCounter: {fileID: 7126717708412966138}
-  kitchenObjectPrefab: {fileID: 9155559057007549980, guid: e2740affb4b071f41ab8df45ed68071c,
-    type: 3}
-  point: {fileID: 5695819366861120609}
+  kitchenObjectSO: {fileID: 0}
+  test: 0
 --- !u!1001 &6725806055078342736
 PrefabInstance:
   m_ObjectHideFlags: 0
