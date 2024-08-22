@@ -13,11 +13,17 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameInput.InteractHandler += GameInput_InteractHandler;//3订阅这个事件InteractHandler，当事件被触发时调用GameInput_InteractHandler方法
     }
-    private void Update ()
+
+    private void GameInput_InteractHandler (object sender, EventArgs e)
     {
         HandleInteraction();
+    }
+
+    private void Update ()
+    {
+        
     }
     private void FixedUpdate ()
     {
