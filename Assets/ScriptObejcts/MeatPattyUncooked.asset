@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddf5bf629a1b9d46bc732421c15de0f, type: 3}
   m_Name: MeatPattyUncooked
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2783509339406408192, guid: 5179da22c1342df4384323b1ced5774a, type: 3}
+  prefab: {fileID: 9155559057007549980, guid: ebde33559a396c64e878e147b51e6968, type: 3}
   sprite: {fileID: 21300000, guid: f1f50c7ef90b19741b26f2040806cf56, type: 3}
   objectName: "\u751F\u725B\u6392"
