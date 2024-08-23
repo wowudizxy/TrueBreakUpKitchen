@@ -8,19 +8,19 @@ public class KitchenObjectHolder : MonoBehaviour
     private KitchenObject kitchenObject;
     [SerializeField] private Transform holdPoint;
 
-    public void TransferKitchenObject (ClearCounter sourceCounter, ClearCounter targetCounter)
+    public void TransferKitchenObject (KitchenObjectHolder sourceHolder, KitchenObjectHolder targetHolder)
     {
-        if (sourceCounter.GetKitchenObject() == null)
+        if (sourceHolder.GetKitchenObject() == null)
         {
-            Debug.LogWarning("目前柜台上没有食物");
+            Debug.LogWarning("原持有者上没有食物");
             return;
         }
-        if (targetCounter.GetKitchenObject() != null)
+        if (targetHolder.GetKitchenObject() != null)
         {
-            Debug.LogWarning("目标柜台上有食物");
+            Debug.LogWarning("目标持有者上有食物");
             return;
         }
-        targetCounter.AddKitchenObject(sourceCounter.GetKitchenObject());
+        targetHolder.AddKitchenObject(sourceHolder.GetKitchenObject());
         ClearKitchenObject();
     }
     private void AddKitchenObject (KitchenObject kitchenObject)

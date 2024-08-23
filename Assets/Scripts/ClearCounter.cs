@@ -28,7 +28,7 @@ public class ClearCounter : KitchenObjectHolder
         }
         else
         {
-            Debug.LogWarning("Пе");
+            TransferKitchenObject (this, Player.Instance);
         }
     }
     public void SelectCounter ()

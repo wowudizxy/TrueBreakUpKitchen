@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : KitchenObjectHolder
 {
+
     private ClearCounter selectCounter;
     [SerializeField] private LayerMask counterLayerMask;
     private bool isWalking = false;
@@ -13,6 +14,18 @@ public class Player : KitchenObjectHolder
     [SerializeField] private GameInput gameInput;
     // Start is called before the first frame update
     Vector3 direction;
+
+    public static Player Instance { get; private set; }// 静态变量来存储单例实例
+    private void Awake ()
+    {
+        // 如果Instance已经被赋值且不是当前实例，销毁这个新创建的对象
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     void Start()
     {
         gameInput.InteractHandler += GameInput_InteractHandler;//3订阅这个事件InteractHandler，当事件被触发时调用GameInput_InteractHandler方法
