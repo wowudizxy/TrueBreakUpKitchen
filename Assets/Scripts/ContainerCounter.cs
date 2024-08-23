@@ -8,14 +8,13 @@ public class ContainerCounter : BaseCounter
 
     public override void Interact (Player player)
     {
-        if (GetKitchenObject() == null)
-        {
-            KitchenObject kitchenObject = Instantiate(kitchenObjectSO.prefab, GetHoldPoint(), false).GetComponent<KitchenObject>();
-            SetKitchenObject(kitchenObject);
-        }
-        else
-        {
-            TransferKitchenObject(this, player);
-        }
+        if (player.IsHaveKitchenObject()) return;
+        CreateKitchenObject(kitchenObjectSO.prefab);
+        TransferKitchenObject(this,player);
+    }
+    public void CreateKitchenObject (GameObject kitchenObjectPrefab)
+    {
+        KitchenObject kitchenObject = Instantiate(kitchenObjectPrefab, GetHoldPoint(), false).GetComponent<KitchenObject>();
+        SetKitchenObject(kitchenObject);
     }
 }
