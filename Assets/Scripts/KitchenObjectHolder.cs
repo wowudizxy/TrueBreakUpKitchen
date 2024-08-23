@@ -21,7 +21,7 @@ public class KitchenObjectHolder : MonoBehaviour
             return;
         }
         targetHolder.AddKitchenObject(sourceHolder.GetKitchenObject());
-        ClearKitchenObject();
+        sourceHolder.ClearKitchenObject();
     }
     //添加参数食材到指定地点，并将新食材赋值给本身的kitchenObject
     private void AddKitchenObject (KitchenObject kitchenObject)
