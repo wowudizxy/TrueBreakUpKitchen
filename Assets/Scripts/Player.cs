@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : KitchenObjectHolder
 {
 
-    private ClearCounter selectCounter;
+    private BaseCounter selectCounter;
     [SerializeField] private LayerMask counterLayerMask;
     private bool isWalking = false;
     [SerializeField] private float moveSpeed = 7f;
@@ -33,7 +33,7 @@ public class Player : KitchenObjectHolder
 
     private void GameInput_InteractHandler (object sender, EventArgs e)
     {
-        selectCounter?.Interact();
+        selectCounter?.Interact(this);
     }
 
     private void Update ()
@@ -60,7 +60,7 @@ public class Player : KitchenObjectHolder
     {
         if(Physics.Raycast(transform.position,transform.forward,out RaycastHit hit, 2f, counterLayerMask))
         {
-            if(hit.collider.TryGetComponent<ClearCounter>(out ClearCounter counter))
+            if(hit.collider.TryGetComponent<BaseCounter>(out BaseCounter counter))
             {
                 SetSelectCounter(counter);
             }
@@ -78,7 +78,7 @@ public class Player : KitchenObjectHolder
     {
         get { return isWalking; }
     }
-    private void SetSelectCounter (ClearCounter counter)
+    private void SetSelectCounter (BaseCounter counter)
     {
         if (counter != selectCounter)
         {
