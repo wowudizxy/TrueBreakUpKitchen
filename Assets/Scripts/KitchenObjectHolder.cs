@@ -47,7 +47,6 @@ public class KitchenObjectHolder : MonoBehaviour
     //更新本身食材
     public void SetKitchenObject (KitchenObject kitchenObject)
     {
-        print(gameObject);
         this.kitchenObject = kitchenObject;
     }
     //判断本身是否有食材
