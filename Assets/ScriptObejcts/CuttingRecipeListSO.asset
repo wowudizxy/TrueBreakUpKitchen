@@ -15,10 +15,10 @@ MonoBehaviour:
   list:
   - input: {fileID: 11400000, guid: cffa25f971fc239449e5ec1381c06555, type: 2}
     output: {fileID: 11400000, guid: 470b70b24710d93458193924549b43e7, type: 2}
-    cuttingCount: 5
+    cuttingCountMax: 5
   - input: {fileID: 11400000, guid: c74f3775ce376f845b053c8935585ae7, type: 2}
     output: {fileID: 11400000, guid: 1520427fb0af3cb4c9fba1d15d56dd84, type: 2}
-    cuttingCount: 3
+    cuttingCountMax: 3
   - input: {fileID: 11400000, guid: 3668b2630dc0edf41843337777740679, type: 2}
     output: {fileID: 11400000, guid: bdb01d706a05e6249b00887ec214e224, type: 2}
-    cuttingCount: 3
+    cuttingCountMax: 3

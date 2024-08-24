@@ -8,7 +8,7 @@ public class CuttingRecipe
 {
     public KitchenObjectSO input;
     public KitchenObjectSO output;
-    public int cuttingCount;
+    public int cuttingCountMax;
 }
 
 [CreateAssetMenu()]
