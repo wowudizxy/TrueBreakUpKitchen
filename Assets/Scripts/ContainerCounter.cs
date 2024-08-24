@@ -19,9 +19,5 @@ public class ContainerCounter : BaseCounter
         CreateKitchenObject(kitchenObjectSO.prefab);
         TransferKitchenObject(this,player);
     }
-    public void CreateKitchenObject (GameObject kitchenObjectPrefab)
-    {
-        KitchenObject kitchenObject = Instantiate(kitchenObjectPrefab, GetHoldPoint(), false).GetComponent<KitchenObject>();
-        SetKitchenObject(kitchenObject);
-    }
+    
 }

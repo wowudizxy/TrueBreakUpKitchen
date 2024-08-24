@@ -42,6 +42,7 @@ public class KitchenObjectHolder : MonoBehaviour
     //清空本身kitchenObject
     private void ClearKitchenObject ()
     {
+        print(kitchenObject + "   clear");
         kitchenObject = null;
     }
     //更新本身食材
@@ -53,5 +54,15 @@ public class KitchenObjectHolder : MonoBehaviour
     public bool IsHaveKitchenObject ()
     {
         return kitchenObject != null;
+    }
+    public void CreateKitchenObject (GameObject kitchenObjectPrefab)
+    {
+        KitchenObject kitchenObject = Instantiate(kitchenObjectPrefab, GetHoldPoint(), false).GetComponent<KitchenObject>();
+        SetKitchenObject(kitchenObject);
+    }
+    public void DestroyKitchenObject ()
+    {
+        Destroy(kitchenObject.gameObject);
+        ClearKitchenObject();
     }
 }

@@ -10,6 +10,10 @@ public class BaseCounter : KitchenObjectHolder
     {
         Debug.LogWarning("Counter子类未书写 Interact 方法");
     }
+    public virtual void Operate(Player player)//操作方法
+    {
+        
+    }
     public void SelectCounter ()//选中counter
     {
         selectCounter.SetActive(true);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CuttingCounter : BaseCounter
 {
+    [SerializeField] private KitchenObjectSO cuttingKitchenObject;
     public override void Interact (Player player)
     {
         if (player.IsHaveKitchenObject())//玩家有食材
@@ -28,5 +29,18 @@ public class CuttingCounter : BaseCounter
                 TransferKitchenObject(this, player);
             }
         }
+    }
+    public override void Operate (Player player)
+    {
+        if (IsHaveKitchenObject())
+        {
+            DestroyKitchenObject();
+            CreateKitchenObject(cuttingKitchenObject.prefab);
+        }
+        else
+        {
+            print("没有CuttingKitchenObject");
+        }
+        
     }
 }
