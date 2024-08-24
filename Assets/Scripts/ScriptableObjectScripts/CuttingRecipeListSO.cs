@@ -8,51 +8,54 @@ public class CuttingRecipe
 {
     public KitchenObjectSO input;
     public KitchenObjectSO output;
+    public int cuttingCount;
 }
-/*[CreateAssetMenu()]
-public class CuttingRecipeListSO : ScriptableObject
-{
-    public List<CuttingRecipe> list;
 
-    public KitchenObjectSO GetOutput (KitchenObjectSO input)
-    {
-        foreach (var recipe in list)
-        {
-            if(input == recipe.input)
-            {
-                return recipe.output;
-            }
-        }
-        return null;
-    }
-}*/
 [CreateAssetMenu()]
 public class CuttingRecipeListSO : ScriptableObject
 {
     public List<CuttingRecipe> list;
-    private Dictionary<KitchenObjectSO, KitchenObjectSO> recipeDictionary;
+    private Dictionary<KitchenObjectSO, CuttingRecipe> recipeDictionary;
 
     // 在启用时初始化字典
     private void OnEnable ()
     {
-        recipeDictionary = new Dictionary<KitchenObjectSO, KitchenObjectSO>();
+        recipeDictionary = new Dictionary<KitchenObjectSO, CuttingRecipe>();
         foreach (var recipe in list)
         {
             if (!recipeDictionary.ContainsKey(recipe.input))
             {
-                recipeDictionary.Add(recipe.input, recipe.output);
+                recipeDictionary.Add(recipe.input, recipe);
             }
         }
     }
 
-    public KitchenObjectSO GetOutput (KitchenObjectSO input)
+    public bool TryGetCuttingRecipe(KitchenObjectSO input,out CuttingRecipe inputCuttingRecipe)
     {
-        // 使用字典进行快速查找
-        if (recipeDictionary.TryGetValue(input, out KitchenObjectSO output))
+        if (recipeDictionary.TryGetValue(input, out CuttingRecipe cuttingRecipe))
         {
-            return output;
+            inputCuttingRecipe = cuttingRecipe;
+            return true;
         }
-        return null;
+        inputCuttingRecipe=null;
+        return false;
     }
+    /*[CreateAssetMenu()]
+    public class CuttingRecipeListSO : ScriptableObject
+    {
+        public List<CuttingRecipe> list;
+
+        public KitchenObjectSO GetOutput (KitchenObjectSO input)
+        {
+            foreach (var recipe in list)
+            {
+                if(input == recipe.input)
+                {
+                    return recipe.output;
+                }
+            }
+            return null;
+        }
+    }*/
 }
 

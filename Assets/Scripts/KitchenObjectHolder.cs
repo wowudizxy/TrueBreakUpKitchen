@@ -42,7 +42,6 @@ public class KitchenObjectHolder : MonoBehaviour
     //清空本身kitchenObject
     private void ClearKitchenObject ()
     {
-        print(kitchenObject + "   clear");
         kitchenObject = null;
     }
     //更新本身食材
