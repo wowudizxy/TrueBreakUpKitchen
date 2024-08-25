@@ -5,9 +5,19 @@ using UnityEngine.UIElements;
 
 public class CuttingCounter : BaseCounter
 {
+    private Animator _animator;
     [SerializeField] private ProgressBarUI progressBarUI;
     [SerializeField] private CuttingRecipeListSO cuttingRecipeList;
     private int cuttingCount =0;
+    private void Start()
+    {
+        _animator = transform.Find("CuttingCounter_Visual").GetComponent<Animator>();
+    }
+    private void Cut()
+    {
+        cuttingCount++;
+        _animator.SetTrigger("Cut");
+    }
     public override void Interact (Player player)
     {
         if (player.IsHaveKitchenObject())//Íæ¼ÒÓÐÊ³²Ä
@@ -39,7 +49,7 @@ public class CuttingCounter : BaseCounter
         {
             if(cuttingRecipeList.TryGetCuttingRecipe(GetKitchenObject().GetKitchenObjectSO(), out CuttingRecipe cuttingRecipe))
             {
-                cuttingCount++;
+                Cut();
                 progressBarUI.UpdateProgress(cuttingCount / (float)cuttingRecipe.cuttingCountMax);
                 if (cuttingCount == cuttingRecipe.cuttingCountMax)
                 {
