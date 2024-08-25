@@ -22,11 +22,11 @@ public class FryingRecipeListSO : ScriptableObject
         }
     }
 
-    public bool TryGetCuttingRecipe(KitchenObjectSO input, out FryingRecipe inputFryingRecipe)
+    public bool TryGetFryingRecipe(KitchenObjectSO input, out FryingRecipe inputFryingRecipe)
     {
-        if (recipeDictionary.TryGetValue(input, out FryingRecipe cuttingRecipe))
+        if (recipeDictionary.TryGetValue(input, out FryingRecipe fryingRecipe))
         {
-            inputFryingRecipe = cuttingRecipe;
+            inputFryingRecipe = fryingRecipe;
             return true;
         }
         inputFryingRecipe = null;
