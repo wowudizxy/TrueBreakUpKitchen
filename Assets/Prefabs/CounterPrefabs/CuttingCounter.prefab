@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.7604384, b: 0.899371, a: 1}
+  m_Color: {r: 0, g: 0.7607843, b: 0.8784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -488,6 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdPoint: {fileID: 3710688388973691486}
   selectCounter: {fileID: 6405416585859185325}
+  counterVisual: {fileID: 4846095688364955342}
   progressBarUI: {fileID: 8011606485272595207}
   cuttingRecipeList: {fileID: 11400000, guid: 55101a8593530d548b6acb847f3e0dbb, type: 2}
 --- !u!1001 &4307835279714869857
@@ -556,11 +557,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4589716710238282922, guid: d72bee846803d074784ffb8f64e993ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4846095688364955342}
   m_SourcePrefab: {fileID: 100100000, guid: d72bee846803d074784ffb8f64e993ca, type: 3}
 --- !u!4 &322414584493344458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: d72bee846803d074784ffb8f64e993ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 4307835279714869857}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &322414584493344459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4589716710238282922, guid: d72bee846803d074784ffb8f64e993ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 4307835279714869857}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4846095688364955342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322414584493344459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0548275137540fe4ba6286a788876c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2055213369483636162}
+--- !u!95 &2055213369483636162 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2831942792982843299, guid: d72bee846803d074784ffb8f64e993ca,
     type: 3}
   m_PrefabInstance: {fileID: 4307835279714869857}
   m_PrefabAsset: {fileID: 0}

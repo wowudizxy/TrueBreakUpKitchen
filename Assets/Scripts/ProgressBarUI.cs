@@ -67,9 +67,13 @@ public class ProgressBarUI : MonoBehaviour
     {
         Show ();
         progressBar.fillAmount = precent;
-        if (precent == 1)
+        if (progressBar.fillAmount == 1)
         {
             Invoke("Hide", 1);
         }
+    }
+    public void SetColor(Color color)
+    {
+        progressBar.color = color;
     }
 }

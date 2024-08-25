@@ -5,18 +5,15 @@ using UnityEngine.UIElements;
 
 public class CuttingCounter : BaseCounter
 {
-    private Animator _animator;
+    [SerializeField] private CuttingCounterVisual counterVisual;
     [SerializeField] private ProgressBarUI progressBarUI;
     [SerializeField] private CuttingRecipeListSO cuttingRecipeList;
     private int cuttingCount =0;
-    private void Start()
-    {
-        _animator = transform.Find("CuttingCounter_Visual").GetComponent<Animator>();
-    }
+    
     private void Cut()
     {
         cuttingCount++;
-        _animator.SetTrigger("Cut");
+        counterVisual.Cut();
     }
     public override void Interact (Player player)
     {

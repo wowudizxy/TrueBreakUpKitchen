@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StoveCounter : BaseCounter
 {
+    [SerializeField] private ProgressBarUI progressBarUI;
+    [SerializeField] private StoveCounterVisual counterVisual;
     private float FryingTimer = 0;
     private FryingRecipe fryingRecipe;
     public enum StoveState
@@ -21,9 +23,14 @@ public class StoveCounter : BaseCounter
         switch (state)
         {
             case StoveState.Idle:
+                progressBarUI.Hide();
+                counterVisual.HideStoveEffect();
                 break;
             case StoveState.Frying:
+                counterVisual.ShowStoveEffect();
                 FryingTimer += Time.deltaTime;
+                progressBarUI.UpdateProgress(FryingTimer / fryingRecipe.fryingTime);
+                progressBarUI.SetColor(new Color(0, 194, 229));
                 if (FryingTimer > fryingRecipe.fryingTime)
                 {
                     DestroyKitchenObject();
@@ -34,7 +41,10 @@ public class StoveCounter : BaseCounter
                 }
                 break;
             case StoveState.Burning:
+                counterVisual.ShowStoveEffect();
                 FryingTimer += Time.deltaTime;
+                progressBarUI.UpdateProgress(FryingTimer/ fryingRecipe.fryingTime);
+                progressBarUI.SetColor(Color.Lerp(new Color(1.0f, 0.0f, 0.0f), new Color(1f, 1f, 0f), Mathf.PingPong(Time.time / 0.2f, 1.0f)));
                 if (FryingTimer > fryingRecipe.fryingTime)
                 {
                     DestroyKitchenObject();
@@ -43,6 +53,8 @@ public class StoveCounter : BaseCounter
                 }
                 break;
             case StoveState.Burned:
+                progressBarUI.Hide();
+                counterVisual.HideStoveEffect();
                 break;
             default:
                 break;
