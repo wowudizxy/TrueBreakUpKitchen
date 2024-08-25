@@ -40,6 +40,7 @@ public class CuttingCounter : BaseCounter
             else
             {
                 TransferKitchenObject(this, player);
+                progressBarUI.Hide();
             }
         }
     }
