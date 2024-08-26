@@ -66,4 +66,8 @@ public class KitchenObjectHolder : MonoBehaviour
         Destroy(kitchenObject.gameObject);
         ClearKitchenObject();
     }
+    /*public bool IsHavePlate()
+    {
+        GetKitchenObject().TryGetComponent<PlatesCounter>();
+    }*/
 }

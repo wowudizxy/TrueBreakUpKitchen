@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlatesCounter : BaseCounter
 {
     private float timer;
-    private List<KitchenObject> platesList;
+    private List<KitchenObject> platesList = new List<KitchenObject>();
     [SerializeField] private int platesMax = 5;
     [SerializeField] private float span = 3;
     [SerializeField] private KitchenObjectSO plateSO;
@@ -22,10 +22,7 @@ public class PlatesCounter : BaseCounter
             platesList.RemoveAt(platesList.Count - 1);
         }
     }
-    private void Start()
-    {
-        platesList = new List<KitchenObject>();
-    }
+
     private void Update()
     {
         if (platesList.Count < platesMax)

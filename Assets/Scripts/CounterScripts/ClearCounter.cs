@@ -8,14 +8,29 @@ public class ClearCounter : BaseCounter
     {
         if (player.IsHaveKitchenObject())//玩家有食材
         {
-            if(!IsHaveKitchenObject ())//当前柜台不为空
+            if (player.GetKitchenObject().TryGetComponent<PlateKitchenObject>(out PlateKitchenObject plate))//并且手上有盘子
             {
-                TransferKitchenObject(player, this);
+                if (IsHaveKitchenObject()&&plate.TryAddPlateKitchenObject(GetKitchenObject().GetKitchenObjectSO()))//当前柜台上有食材
+                {
+                    DestroyKitchenObject();
+                }
+                else
+                {
+                    TransferKitchenObject(player,this);
+                }
             }
             else
             {
-                Debug.LogWarning("Player手上有食材并且柜台也有食材");
+                if (!IsHaveKitchenObject())//手上有食材，但没盘子，柜台为空，就将食材放在柜台上
+                {
+                    TransferKitchenObject(player,this);
+                }
+                else
+                {
+
+                }
             }
+            
         }
         else//玩家没有食材
         {
