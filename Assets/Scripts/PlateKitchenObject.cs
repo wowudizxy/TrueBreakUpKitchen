@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlateKitchenObject : KitchenObject
 {
+    [SerializeField] private KitchenObjectGridUI kitchenGridUI;
     [SerializeField] private PlateCompleteVisual plateCompleteVisual;
     [SerializeField] private List<KitchenObjectSO> ablePutOnPlateListSO;
     private List<KitchenObjectSO> onPlateKitchenListSO = new List<KitchenObjectSO>();
@@ -15,6 +16,7 @@ public class PlateKitchenObject : KitchenObject
             return false;
         }
         plateCompleteVisual.ShowKitchenObject(kitchenObjectSO);
+        kitchenGridUI.ShowKitchenObjectUI(kitchenObjectSO);
         onPlateKitchenListSO.Add(kitchenObjectSO);
         
         return true;
