@@ -24,9 +24,10 @@ public class KitchenObjectHolder : MonoBehaviour
         sourceHolder.ClearKitchenObject();
     }
     //添加参数食材到指定地点，并将新食材赋值给本身的kitchenObject
-    private void AddKitchenObject (KitchenObject kitchenObject)
+    public void AddKitchenObject (KitchenObject kitchenObject)
     {
         kitchenObject.transform.SetParent(holdPoint, false);
+        kitchenObject.transform.localPosition = Vector3.zero;
         SetKitchenObject(kitchenObject);
     }
     //取得食材
@@ -40,7 +41,7 @@ public class KitchenObjectHolder : MonoBehaviour
         return holdPoint;
     }
     //清空本身kitchenObject
-    private void ClearKitchenObject ()
+    public void ClearKitchenObject ()
     {
         kitchenObject = null;
     }
