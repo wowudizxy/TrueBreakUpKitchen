@@ -1,15 +1,16 @@
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
+    public event EventHandler HaveNewOrderRecipe;
     public static OrderManager Instance { get;private set; }
     [SerializeField] private RecipeListSO recipeSOlist;//总食谱集合
     [SerializeField] private float orderTime=3;
     [SerializeField] private int orderMax = 5;
-    private List<RecipeSO> ExistOrderList = new List<RecipeSO>();//当前存在的食谱
+    private List<RecipeSO> existOrderList = new List<RecipeSO>();//当前存在的食谱
     private float Timer;
     private bool isStartOrder = true;
     private void Awake()
@@ -18,7 +19,7 @@ public class OrderManager : MonoBehaviour
     }
     private void Update()
     {
-        if (isStartOrder&& ExistOrderList.Count < orderMax)
+        if (isStartOrder&& existOrderList.Count < orderMax)
         {
             OrderRecipe();
         }
@@ -36,14 +37,15 @@ public class OrderManager : MonoBehaviour
 
     private void CreateRecipe()
     {
-        int randomNumber = Random.Range(0, recipeSOlist.recipeListSO.Count);
-        ExistOrderList.Add(recipeSOlist.recipeListSO[randomNumber]);
+        int randomNumber = UnityEngine.Random.Range(0, recipeSOlist.recipeListSO.Count);
+        existOrderList.Add(recipeSOlist.recipeListSO[randomNumber]);
+        HaveNewOrderRecipe?.Invoke(this, EventArgs.Empty);
     }
 
     public void DeliveryRecipe(PlateKitchenObject plateKitchenObject)
     {
         RecipeSO SuccessRecipe =null;
-        foreach (var item in ExistOrderList)
+        foreach (var item in existOrderList)
         {
             if (isSuccess(item.RecipeObejectList, plateKitchenObject.GetOnPlateKitchenListSO()))
             {
@@ -58,7 +60,7 @@ public class OrderManager : MonoBehaviour
         else
         {
             print("成功");
-            ExistOrderList.Remove(SuccessRecipe);
+            existOrderList.Remove(SuccessRecipe);
         }
     }
 
@@ -101,6 +103,9 @@ public class OrderManager : MonoBehaviour
 
         return set1.SetEquals(set2);
     }
-
+    public List<RecipeSO> GetExistOrderList()
+    {
+        return existOrderList;
+    }
 
 }
