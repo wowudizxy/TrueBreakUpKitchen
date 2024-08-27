@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
-    public event EventHandler HaveNewOrderRecipe;
+    public event EventHandler UpdateOrderRecipe;
+    
     public static OrderManager Instance { get;private set; }
     [SerializeField] private RecipeListSO recipeSOlist;//总食谱集合
     [SerializeField] private float orderTime=3;
@@ -39,7 +40,11 @@ public class OrderManager : MonoBehaviour
     {
         int randomNumber = UnityEngine.Random.Range(0, recipeSOlist.recipeListSO.Count);
         existOrderList.Add(recipeSOlist.recipeListSO[randomNumber]);
-        HaveNewOrderRecipe?.Invoke(this, EventArgs.Empty);
+        UpdateOrderRecipe?.Invoke(this, EventArgs.Empty);
+        if(existOrderList.Count==5)
+        {
+            isStartOrder = false;
+        }
     }
 
     public void DeliveryRecipe(PlateKitchenObject plateKitchenObject)
@@ -61,6 +66,7 @@ public class OrderManager : MonoBehaviour
         {
             print("成功");
             existOrderList.Remove(SuccessRecipe);
+            UpdateOrderRecipe?.Invoke(this, EventArgs.Empty);
         }
     }
 

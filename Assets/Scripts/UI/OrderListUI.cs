@@ -9,15 +9,15 @@ public class OrderListUI : MonoBehaviour
     [SerializeField] private Transform recipeList; 
     private void Start()
     {
-        OrderManager.Instance.HaveNewOrderRecipe += Instance_HaveNewOrderRecipe;
+        OrderManager.Instance.UpdateOrderRecipe += Instance_HaveNewOrderRecipe;
     }
 
     private void Instance_HaveNewOrderRecipe(object sender, System.EventArgs e)
     {
-        UpdateOrderList(OrderManager.Instance.GetExistOrderList());
+        UpdateOrderListUI(OrderManager.Instance.GetExistOrderList());
     }
 
-    private void UpdateOrderList(List<RecipeSO> existOrderList)
+    private void UpdateOrderListUI(List<RecipeSO> existOrderList)
     {
         foreach (Transform item in recipeList)
         {
@@ -30,6 +30,7 @@ public class OrderListUI : MonoBehaviour
         {
             RecipeUI recipeUI =  Instantiate(recipeTempUI, recipeList);
             recipeUI.gameObject.SetActive(true);
+            recipeUI.UpdateDetailUI(recipeSO);
         }
     }
 }
