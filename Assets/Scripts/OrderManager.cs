@@ -6,7 +6,8 @@ using UnityEngine;
 public class OrderManager : MonoBehaviour
 {
     public event EventHandler UpdateOrderRecipe;
-    
+    public event EventHandler OnRecipeSuccessed;
+    public event EventHandler OnRecipeFailed;
     public static OrderManager Instance { get;private set; }
     [SerializeField] private RecipeListSO recipeSOlist;//总食谱集合
     [SerializeField] private float orderTime=3;
@@ -61,12 +62,14 @@ public class OrderManager : MonoBehaviour
         if (SuccessRecipe == null)
         {
             print("失败");
+            OnRecipeFailed?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             print("成功");
             existOrderList.Remove(SuccessRecipe);
             UpdateOrderRecipe?.Invoke(this, EventArgs.Empty);
+            OnRecipeSuccessed?.Invoke(this, EventArgs.Empty);
         }
     }
 
