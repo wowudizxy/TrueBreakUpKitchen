@@ -4,5 +4,14 @@ using UnityEngine;
 
 public class DeliveryCounter : BaseCounter
 {
-    
+    public override void Interact(Player player)
+    {
+        if(player.IsHaveKitchenObject()&&player.GetKitchenObject().TryGetComponent<PlateKitchenObject>
+            (out PlateKitchenObject plateKitchenObject))
+        {
+            //TODO 判断上菜是否正确
+            OrderManager.Instance.DeliveryRecipe(plateKitchenObject);
+            player.DestroyKitchenObject();
+        }
+    }
 }

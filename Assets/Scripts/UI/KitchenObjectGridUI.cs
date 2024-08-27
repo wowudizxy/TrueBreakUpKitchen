@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class KitchenObjectGridUI : MonoBehaviour
 {
-    [SerializeField] KitchenObjectIcon icon;
+    KitchenObjectIcon icon;
+    private void Start()
+    {
+        icon = transform.Find("KitchenObjectIcon").GetComponent<KitchenObjectIcon>();
+    }
     public void ShowKitchenObjectUI(KitchenObjectSO kitchenObjectSO)
     {
         KitchenObjectIcon kitchenObjectIcon =  Instantiate(icon,transform);
