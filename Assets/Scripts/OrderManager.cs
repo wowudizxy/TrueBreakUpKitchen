@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OrderManager : MonoBehaviour
@@ -61,7 +62,7 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    private bool isSuccess(List<KitchenObjectSO> list1, List<KitchenObjectSO> list2)
+    /*private bool isSuccess(List<KitchenObjectSO> list1, List<KitchenObjectSO> list2)
     {
         if(list1.Count!= list2.Count)
         {
@@ -75,5 +76,31 @@ public class OrderManager : MonoBehaviour
             }
         }
         return true;
+    }*/
+    /*private bool isSuccess(List<KitchenObjectSO> list1, List<KitchenObjectSO> list2)
+    {
+        if (list1.Count != list2.Count)
+        {
+            return false;
+        }
+
+        list1.Sort((x, y) => x.name.CompareTo(y.name)); // 根据名称或唯一标识符排序
+        list2.Sort((x, y) => x.name.CompareTo(y.name));
+
+        return list1.SequenceEqual(list2);
+    }*/
+    private bool isSuccess(List<KitchenObjectSO> list1, List<KitchenObjectSO> list2)
+    {
+        if (list1.Count != list2.Count)
+        {
+            return false;
+        }
+
+        HashSet<KitchenObjectSO> set1 = new HashSet<KitchenObjectSO>(list1);
+        HashSet<KitchenObjectSO> set2 = new HashSet<KitchenObjectSO>(list2);
+
+        return set1.SetEquals(set2);
     }
+
+
 }

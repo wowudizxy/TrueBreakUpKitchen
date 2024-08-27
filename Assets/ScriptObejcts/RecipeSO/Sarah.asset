@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sarah
   m_EditorClassIdentifier: 
   recipeName: "\u838E\u62C9"
-  RecipeObejects:
-  - {fileID: 11400000, guid: 470b70b24710d93458193924549b43e7, type: 2}
+  RecipeObejectList:
   - {fileID: 11400000, guid: bdb01d706a05e6249b00887ec214e224, type: 2}
   - {fileID: 11400000, guid: 1520427fb0af3cb4c9fba1d15d56dd84, type: 2}
+  - {fileID: 11400000, guid: 470b70b24710d93458193924549b43e7, type: 2}

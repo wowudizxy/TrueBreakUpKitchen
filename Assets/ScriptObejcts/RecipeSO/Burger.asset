@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Burger
   m_EditorClassIdentifier: 
   recipeName: "\u6C49\u5821"
-  RecipeObejects:
+  RecipeObejectList:
   - {fileID: 11400000, guid: e07b44294fb2931439fb73628976671e, type: 2}
   - {fileID: 11400000, guid: 470b70b24710d93458193924549b43e7, type: 2}
-  - {fileID: 11400000, guid: bdb01d706a05e6249b00887ec214e224, type: 2}
   - {fileID: 11400000, guid: 1520427fb0af3cb4c9fba1d15d56dd84, type: 2}
   - {fileID: 11400000, guid: f3daa4b9cde75af448db86b344881b5e, type: 2}
+  - {fileID: 11400000, guid: bdb01d706a05e6249b00887ec214e224, type: 2}
