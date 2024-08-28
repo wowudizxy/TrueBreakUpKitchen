@@ -1,12 +1,19 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float waitingToStartTimer = 3;
-    [SerializeField] private float countDownToStartTimer =3;
-    [SerializeField] private float gamePlayingTimer = 3;
+    public static GameManager Instance { get; private set; }
+
+    [SerializeField] private float waitingToStartDuration = 3f;
+    [SerializeField] private float countDownToStartDuration = 3f;
+    [SerializeField] private float gamePlayingDuration = 3f;
+
+    public event EventHandler OnCountDownStarted;
+    public event EventHandler OnGamePlayingStarted;
+    public event EventHandler OnGameOverStarted;
+
     public enum State
     {
         WaitingToStart,
@@ -19,71 +26,86 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         state = State.WaitingToStart;
     }
-    private void Update()
+
+    private void Start()
     {
+        StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
+    }
+
+    private IEnumerator StateTimer(float duration, Action onComplete)
+    {
+        yield return new WaitForSeconds(duration);
+        onComplete?.Invoke();
+    }
+
+    private void ConvertState(State newState)
+    {
+        state = newState;
+
         switch (state)
         {
             case State.WaitingToStart:
-                waitingToStartTimer-= Time.deltaTime;
                 OnWaitingToStart();
-                if (waitingToStartTimer < 0)
-                {
-                    ConvertState(State.CountDownToStart);
-                }
+                StartCoroutine(StateTimer(waitingToStartDuration, () => ConvertState(State.CountDownToStart)));
                 break;
+
             case State.CountDownToStart:
-                countDownToStartTimer -= Time.deltaTime;
                 OnCountDownToStart();
-                if (countDownToStartTimer < 0)
-                {
-                    ConvertState(State.GamePlaying);
-                }
+                OnCountDownStarted?.Invoke(this, EventArgs.Empty);
+                StartCoroutine(StateTimer(countDownToStartDuration, () => ConvertState(State.GamePlaying)));
                 break;
+
             case State.GamePlaying:
-                gamePlayingTimer -= Time.deltaTime;
                 OnGamePlaying();
-                if (gamePlayingTimer<0)
-                {
-                    ConvertState(State.GameOver);
-                }
+                OnGamePlayingStarted?.Invoke(this, EventArgs.Empty);
+                StartCoroutine(StateTimer(gamePlayingDuration, () => ConvertState(State.GameOver)));
                 break;
+
             case State.GameOver:
                 OnGameOver();
-                break;
-            default:
+                OnGameOverStarted?.Invoke(this, EventArgs.Empty);
                 break;
         }
     }
-    public void ConvertState(State state)
+
+    private void OnWaitingToStart()
     {
-        this.state = state; 
+        HandlePlayerState(false);
     }
-    public void OnWaitingToStart()
+
+    private void OnCountDownToStart()
     {
-        DisablePlayer();
+        HandlePlayerState(false);
+        // Additional logic for countdown (e.g., UI updates) can be added here.
     }
-    public void OnCountDownToStart()
+
+    private void OnGamePlaying()
     {
-        DisablePlayer();
+        HandlePlayerState(true);
+        // Additional logic for game playing (e.g., UI updates) can be added here.
     }
-    public void OnGamePlaying()
+
+    private void OnGameOver()
     {
-        EnablePlayer();
+        HandlePlayerState(false);
+        // Additional logic for game over (e.g., displaying final score) can be added here.
     }
-    public void OnGameOver()
+
+    private void HandlePlayerState(bool isEnabled)
     {
-        DisablePlayer();
-    }
-    public void DisablePlayer()
-    {
-        Player.Instance.enabled = false;
-        Player.Instance.GetComponentInChildren<Animator>().enabled = false;
-    }
-    public void EnablePlayer()
-    {
-        Player.Instance.enabled = true;
-        Player.Instance.GetComponentInChildren<Animator>().enabled = true;
+        if (Player.Instance != null)
+        {
+            Player.Instance.enabled = isEnabled;
+            Player.Instance.GetComponentInChildren<Animator>().enabled = isEnabled;
+        }
     }
 }

@@ -31,6 +31,6 @@ public class PlayerSound : MonoBehaviour
 
     private void PlayStepSound()
     {
-        //PlayerStepSound?.Invoke(this, EventArgs.Empty);
+        PlayerStepSound?.Invoke(this, EventArgs.Empty);
     }
 }

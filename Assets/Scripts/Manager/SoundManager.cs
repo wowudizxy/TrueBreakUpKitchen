@@ -24,7 +24,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerSound_PlayerStepSound(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.foot_step, Player.Instance);
+        //PlaySound(audioClipRefsSO.foot_step, Player.Instance);
     }
 
     private void TrashCounter_Trash(object sender, System.EventArgs e)
