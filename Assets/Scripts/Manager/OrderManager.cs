@@ -13,11 +13,21 @@ public class OrderManager : MonoBehaviour
     [SerializeField] private int orderMax = 5;
     private List<RecipeSO> existOrderList = new List<RecipeSO>();//当前存在的食谱
     private float Timer;
-    private bool isStartOrder = true;
+    private bool isStartOrder = false;
     private void Awake()
     {
         Instance = this;
     }
+    private void Start()
+    {
+        GameManager.Instance.OnGamePlayingStarted += GameManager_OnGamePlayingStarted;
+    }
+
+    private void GameManager_OnGamePlayingStarted(object sender, EventArgs e)
+    {
+        isStartOrder = true;
+    }
+
     private void Update()
     {
         if (isStartOrder&& existOrderList.Count < orderMax)
