@@ -54,12 +54,15 @@ public class Player : KitchenObjectHolder
 
     private void HandleMovement ()
     {
-        
-        
         transform.position += direction * Time.deltaTime * moveSpeed;
         if (direction != Vector3.zero)
         {
+            isWalking = true;
             transform.forward = Vector3.Slerp(transform.forward, direction, Time.deltaTime * rotateSpeed);
+        }
+        else
+        {
+            isWalking= false;
         }
     }
     private void HandleInteraction ()

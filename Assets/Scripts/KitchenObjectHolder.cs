@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+using System;
 using UnityEngine;
 
 public class KitchenObjectHolder : MonoBehaviour
 {
+    public static event EventHandler PickUP;
+    public static event EventHandler Drop;
     private KitchenObject kitchenObject;//拥有的食材
     [SerializeField] private Transform holdPoint;//放置食材的坐标
     //转移食材方法：原持有者->目标持有者
@@ -46,10 +46,20 @@ public class KitchenObjectHolder : MonoBehaviour
         kitchenObject = null;
     }
     //更新本身食材
-    public void SetKitchenObject (KitchenObject kitchenObject)
+    public void SetKitchenObject(KitchenObject kitchenObject)
     {
+        if (this is Player)
+        {
+            PickUP?.Invoke(this, EventArgs.Empty);
+        }
+        else if (this is BaseCounter && kitchenObject != null && this.kitchenObject != kitchenObject)
+        {
+            Drop?.Invoke(this, EventArgs.Empty);
+        }
+
         this.kitchenObject = kitchenObject;
     }
+
     //判断本身是否有食材
     public bool IsHaveKitchenObject ()
     {
@@ -58,7 +68,7 @@ public class KitchenObjectHolder : MonoBehaviour
     public void CreateKitchenObject (GameObject kitchenObjectPrefab)
     {
         KitchenObject kitchenObject = Instantiate(kitchenObjectPrefab, GetHoldPoint(), false).GetComponent<KitchenObject>();
-        SetKitchenObject(kitchenObject);
+        this.kitchenObject = kitchenObject;
     }
     //删除食材
     public void DestroyKitchenObject ()

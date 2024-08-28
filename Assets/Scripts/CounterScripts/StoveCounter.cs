@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class StoveCounter : BaseCounter
 {
+    [SerializeField] private AudioSource stoveSound;
     [SerializeField] private ProgressBarUI progressBarUI;
     [SerializeField] private StoveCounterVisual counterVisual;
     private float FryingTimer = 0;
@@ -27,6 +29,7 @@ public class StoveCounter : BaseCounter
                 counterVisual.HideStoveEffect();
                 break;
             case StoveState.Frying:
+                print("Fry");
                 counterVisual.ShowStoveEffect();
                 FryingTimer += Time.deltaTime;
                 progressBarUI.UpdateProgress(FryingTimer / fryingRecipe.fryingTime);
@@ -38,6 +41,7 @@ public class StoveCounter : BaseCounter
                     burningRecipeList.TryGetFryingRecipe(GetKitchenObject().GetKitchenObjectSO(),
                         out FryingRecipe newFryingRecipe);
                     SetStoveState(StoveState.Burning, newFryingRecipe);
+                    PlaySoundStove();
                 }
                 break;
             case StoveState.Burning:
@@ -50,6 +54,7 @@ public class StoveCounter : BaseCounter
                     DestroyKitchenObject();
                     CreateKitchenObject(fryingRecipe.output.prefab);
                     SetStoveState(StoveState.Burned);
+                    StopSoundStove();
                 }
                 break;
             case StoveState.Burned:
@@ -71,11 +76,14 @@ public class StoveCounter : BaseCounter
                 {
                     TransferKitchenObject(player, this);
                     SetStoveState(StoveState.Frying, inputFryingRecipe);
-                }else if(burningRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
+                    PlaySoundStove();
+                }
+                else if(burningRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
                 out FryingRecipe inputBurningRecipe))
                 {
                     TransferKitchenObject(player, this);
                     SetStoveState(StoveState.Burning, inputBurningRecipe);
+                    PlaySoundStove();
                 }
                 else
                 {
@@ -98,6 +106,7 @@ public class StoveCounter : BaseCounter
             {
                 TransferKitchenObject(this, player);
                 SetStoveState(StoveState.Idle);
+                StopSoundStove();
             }
         }
     }
@@ -112,4 +121,10 @@ public class StoveCounter : BaseCounter
         FryingTimer = 0;
         state = tragetState;
     }
+    public void PlaySoundStove()
+    {
+        stoveSound.Play();
+    }
+    public void StopSoundStove() 
+    {  stoveSound.Pause(); }
 }

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using System;
 
 public class CuttingCounter : BaseCounter
 {
+    public static event EventHandler OnCut;
     [SerializeField] private CuttingCounterVisual counterVisual;
     [SerializeField] private ProgressBarUI progressBarUI;
     [SerializeField] private CuttingRecipeListSO cuttingRecipeList;
@@ -14,6 +15,7 @@ public class CuttingCounter : BaseCounter
     {
         cuttingCount++;
         counterVisual.Cut();
+        OnCut?.Invoke(this,EventArgs.Empty);
     }
     public override void Interact (Player player)
     {
