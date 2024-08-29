@@ -69,31 +69,48 @@ public class StoveCounter : BaseCounter
     {
         if (player.IsHaveKitchenObject())//玩家有食材
         {
-            if (!IsHaveKitchenObject())//当前柜台为空
+            if (player.GetKitchenObject().TryGetComponent<PlateKitchenObject>(out PlateKitchenObject plate))//并且手上有盘子
             {
-                if (fryingRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
-                out FryingRecipe inputFryingRecipe))
+                if (IsHaveKitchenObject() && plate.TryAddPlateKitchenObject(GetKitchenObject().GetKitchenObjectSO()))//当前柜台上有食材
                 {
-                    TransferKitchenObject(player, this);
-                    SetStoveState(StoveState.Frying, inputFryingRecipe);
-                    PlaySoundStove();
-                }
-                else if(burningRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
-                out FryingRecipe inputBurningRecipe))
-                {
-                    TransferKitchenObject(player, this);
-                    SetStoveState(StoveState.Burning, inputBurningRecipe);
-                    PlaySoundStove();
+                    SetStoveState(StoveState.Idle);
+                    StopSoundStove();
+                    DestroyKitchenObject();
                 }
                 else
                 {
-
+                    //TransferKitchenObject(player, this);
                 }
-
             }
             else
             {
-                Debug.LogWarning("Player手上有食材并且柜台也有食材");
+                if (!IsHaveKitchenObject())//当前柜台为空
+                {
+
+                    if (fryingRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
+                    out FryingRecipe inputFryingRecipe))
+                    {
+                        TransferKitchenObject(player, this);
+                        SetStoveState(StoveState.Frying, inputFryingRecipe);
+                        PlaySoundStove();
+                    }
+                    else if (burningRecipeList.TryGetFryingRecipe(player.GetKitchenObject().GetKitchenObjectSO(),
+                    out FryingRecipe inputBurningRecipe))
+                    {
+                        TransferKitchenObject(player, this);
+                        SetStoveState(StoveState.Burning, inputBurningRecipe);
+                        PlaySoundStove();
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+                else
+                {
+                    Debug.LogWarning("Player手上有食材并且柜台也有食材");
+                }
             }
         }
         else//玩家没有食材

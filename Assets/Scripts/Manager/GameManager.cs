@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             case State.GamePlaying:
                 OnGamePlaying();
                 OnGamePlayingStarted?.Invoke(this, EventArgs.Empty);
-                StartCoroutine(StateTimer(100, () => ConvertState(State.GameOver)));
+                StartCoroutine(StateTimer(gamePlayingDuration, () => ConvertState(State.GameOver)));
                 break;
 
             case State.GameOver:
@@ -107,5 +107,9 @@ public class GameManager : MonoBehaviour
             Player.Instance.enabled = isEnabled;
             Player.Instance.GetComponentInChildren<Animator>().enabled = isEnabled;
         }
+    }
+    public bool IsGamePlaying()
+    {
+        return state ==State.GamePlaying;
     }
 }

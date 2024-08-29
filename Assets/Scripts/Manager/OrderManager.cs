@@ -14,6 +14,7 @@ public class OrderManager : MonoBehaviour
     private List<RecipeSO> existOrderList = new List<RecipeSO>();//当前存在的食谱
     private float Timer;
     private bool isStartOrder = false;
+    private int successOrder = 0;
     private void Awake()
     {
         Instance = this;
@@ -26,11 +27,12 @@ public class OrderManager : MonoBehaviour
     private void GameManager_OnGamePlayingStarted(object sender, EventArgs e)
     {
         isStartOrder = true;
+        CreateRecipe();
     }
 
     private void Update()
     {
-        if (isStartOrder&& existOrderList.Count < orderMax)
+        if (isStartOrder&& existOrderList.Count < orderMax&&GameManager.Instance.IsGamePlaying())
         {
             OrderRecipe();
         }
@@ -75,6 +77,7 @@ public class OrderManager : MonoBehaviour
         }
         else
         {
+            successOrder++;
             print("成功");
             existOrderList.Remove(SuccessRecipe);
             UpdateOrderRecipe?.Invoke(this, EventArgs.Empty);
@@ -124,6 +127,10 @@ public class OrderManager : MonoBehaviour
     public List<RecipeSO> GetExistOrderList()
     {
         return existOrderList;
+    }
+    public int GetSuccessOrder()
+    {
+        return successOrder;
     }
 
 }
