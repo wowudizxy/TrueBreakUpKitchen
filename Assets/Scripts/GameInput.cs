@@ -14,6 +14,7 @@ public class GameInput : MonoBehaviour
         gameContral.Player.Enable();
         gameContral.Player.Interact.performed += Interact_performed;//检测按钮按下的事件
         gameContral.Player.Operate.performed += Operate_performed;
+        gameContral.Player2d.Enable();
     }
 
     private void Operate_performed (UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -30,6 +31,12 @@ public class GameInput : MonoBehaviour
     {
         Vector2 dirVector2 = gameContral.Player.Move.ReadValue<Vector2>();
         Vector3 direction = new Vector3(dirVector2.x, 0, dirVector2.y).normalized;
+        return direction;
+    }
+    public Vector3 GetMovement2dNormalized()
+    {
+        Vector2 dirVector2 = gameContral.Player.Move.ReadValue<Vector2>();
+        Vector3 direction = new Vector3(dirVector2.x, 0, 0).normalized;
         return direction;
     }
 }

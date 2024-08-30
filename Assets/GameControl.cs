@@ -189,6 +189,76 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Player2d"",
+            ""id"": ""f7c96719-222f-4770-96ce-aa50710a4f0d"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""b869752e-5f03-473c-805e-f608042e1ba7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""68ca9d9c-1b61-4c75-8f85-f150249e0e55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""188fca04-a1c5-43c8-9ea3-0b2b19cbd3c5"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""e369388a-37ff-4aec-9593-cfe73d656174"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""334e7e2a-e023-43c7-b878-06c020e2064d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90d44891-696f-4340-a3bb-e9b19b188a3f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -198,6 +268,10 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Operate = m_Player.FindAction("Operate", throwIfNotFound: true);
+        // Player2d
+        m_Player2d = asset.FindActionMap("Player2d", throwIfNotFound: true);
+        m_Player2d_Move = m_Player2d.FindAction("Move", throwIfNotFound: true);
+        m_Player2d_Jump = m_Player2d.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,10 +391,69 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Player2d
+    private readonly InputActionMap m_Player2d;
+    private List<IPlayer2dActions> m_Player2dActionsCallbackInterfaces = new List<IPlayer2dActions>();
+    private readonly InputAction m_Player2d_Move;
+    private readonly InputAction m_Player2d_Jump;
+    public struct Player2dActions
+    {
+        private @GameControl m_Wrapper;
+        public Player2dActions(@GameControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Player2d_Move;
+        public InputAction @Jump => m_Wrapper.m_Player2d_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_Player2d; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Player2dActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayer2dActions instance)
+        {
+            if (instance == null || m_Wrapper.m_Player2dActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Player2dActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+        }
+
+        private void UnregisterCallbacks(IPlayer2dActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+        }
+
+        public void RemoveCallbacks(IPlayer2dActions instance)
+        {
+            if (m_Wrapper.m_Player2dActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayer2dActions instance)
+        {
+            foreach (var item in m_Wrapper.m_Player2dActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Player2dActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Player2dActions @Player2d => new Player2dActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOperate(InputAction.CallbackContext context);
+    }
+    public interface IPlayer2dActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class GameMenuUI : MonoBehaviour
     {
         startGameBt.onClick.AddListener(() =>
         {
-
+            Loader.LoadingScene(Loader.Scene.GameScene);
         });
         endGameBt.onClick.AddListener(() =>
         {

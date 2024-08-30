@@ -4327,7 +4327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitingToStartDuration: 1
   countDownToStartDuration: 3
-  gamePlayingDuration: 20
+  gamePlayingDuration: 30
 --- !u!1001 &1677646111
 PrefabInstance:
   m_ObjectHideFlags: 0
