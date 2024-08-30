@@ -14,7 +14,7 @@ public class Player : KitchenObjectHolder
     [SerializeField] private GameInput gameInput;
     // Start is called before the first frame update
     Vector3 direction;
-
+    
     public static Player Instance { get; private set; }// 静态变量来存储单例实例
     private void Awake ()
     {

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnCountDownStarted;
     public event EventHandler OnGamePlayingStarted;
     public event EventHandler OnGameOverStarted;
-
+    private bool isPasue = false;
     public enum State
     {
         WaitingToStart,
@@ -39,6 +39,21 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
+        GameInput.Instance.PauseHandler += GameInput_PauseHandler;
+    }
+
+    private void GameInput_PauseHandler(object sender, EventArgs e)
+    {
+        isPasue = !isPasue;
+        if (isPasue)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+        
     }
 
     private IEnumerator StateTimer(float duration, Action onComplete)
