@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance {  get; private set; }
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
+    private int volume = 0;
     private void Awake()
     {
         Instance = this;
@@ -29,45 +30,54 @@ public class SoundManager : MonoBehaviour
 
     private void TrashCounter_Trash(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.trash,0.7f);
+        PlaySound(audioClipRefsSO.trash);
     }
 
     private void KitchenObjectHolder_PickUP(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.object_pickup,0.6f);
+        PlaySound(audioClipRefsSO.object_pickup);
     }
 
     private void KitchenObjectHolder_Drop(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.object_drop,0.6f);
+        PlaySound(audioClipRefsSO.object_drop);
     }
 
     private void CuttingCounter_OnCut(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.chop,0.8f);
+        PlaySound(audioClipRefsSO.chop);
     }
 
     private void OrderManager_OnRecipeSuccessed(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.delivery_success,0.8f);
+        PlaySound(audioClipRefsSO.delivery_success);
     }
 
     private void OrderManager_OnRecipeFailed(object sender, System.EventArgs e)
     {
-        PlaySound(audioClipRefsSO.delivery_fail,0.8f);
+        PlaySound(audioClipRefsSO.delivery_fail);
     }
     public void PlaySound(AudioClip audioClip, float volume = 0.6f)
     {
         AudioSource.PlayClipAtPoint(audioClip, Camera.main.transform.position);
         
     }
-    public void PlaySound(List<AudioClip> audioClipList, float volume = 1.0f)
+    public void PlaySound(List<AudioClip> audioClipList, float volumeMutipler = 0.1f)
     {
         int index = Random.Range(0, audioClipList.Count);
-        AudioSource.PlayClipAtPoint(audioClipList[index],Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(audioClipList[index],Camera.main.transform.position, volumeMutipler*(volume/10.0f));
 
     }
-    public void PlaySound(List<AudioClip> audioClipList,Vector3 position,float volume = 1.0f)
+    public void ChangeVolume()
+    {
+        volume++;
+        if(volume > 10)
+        {
+            volume = 0;
+        }
+    }
+
+    /*public void PlaySound(List<AudioClip> audioClipList,Vector3 position,float volume = 1.0f)
     {
         int index = Random.Range(0, audioClipList.Count);
         AudioSource.PlayClipAtPoint(audioClipList[index], position,volume);
@@ -89,5 +99,5 @@ public class SoundManager : MonoBehaviour
         {
             PlaySound(audioClipList[3], volume);
         }
-    }
+    }*/
 }

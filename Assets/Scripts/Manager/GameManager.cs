@@ -52,8 +52,10 @@ public class GameManager : MonoBehaviour
 
     private void GameInput_PauseHandler(object sender, EventArgs e)
     {
-        print("GameInput_PauseHandler");
-        SwitchPause();
+        if (SettingUI.IsActive == true)
+        {
+            SwitchPause();
+        }
     }
 
     private IEnumerator StateTimer(float duration, Action onComplete)
@@ -129,7 +131,7 @@ public class GameManager : MonoBehaviour
     }
     public void SwitchPause()
     {
-        print("SwitchPause");
+        
         isPasue = !isPasue;
         if (isPasue)
         {

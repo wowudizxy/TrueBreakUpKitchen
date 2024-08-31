@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GamePauseUI : MonoBehaviour
 {
+    public static event EventHandler OnSettingUI;
     [SerializeField] private GameObject uiParent;
     [SerializeField] private Button continueBt;
     [SerializeField] private Button toMenuBt;
     [SerializeField] private Button restartBt;
+    [SerializeField] private Button settingBt;
+
+
     private void Start()
     {
         GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
@@ -22,6 +26,10 @@ public class GamePauseUI : MonoBehaviour
         {
             Loader.Load(Loader.Scene.GameScene);
             Hide();
+        });
+        settingBt.onClick.AddListener(() =>
+        {
+            OnSettingUI?.Invoke(this,EventArgs.Empty);
         });
         toMenuBt.onClick.AddListener(() =>
         {

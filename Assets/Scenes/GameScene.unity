@@ -907,6 +907,7 @@ Transform:
   m_Children:
   - {fileID: 1345958438}
   - {fileID: 1402944947}
+  - {fileID: 1658659191}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &319506195
@@ -3608,8 +3609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 267}
-  m_SizeDelta: {x: 400, y: 200}
+  m_AnchoredPosition: {x: 0, y: 297}
+  m_SizeDelta: {x: 450, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &977003851
 MonoBehaviour:
@@ -3659,8 +3660,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 108.8
-  m_fontSizeBase: 108.8
+  m_fontSize: 138.2
+  m_fontSizeBase: 138.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3927,7 +3928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1072564061
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4087,6 +4088,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1102616572}
+  - component: {fileID: 1102616573}
   m_Layer: 5
   m_Name: SettingUI
   m_TagString: Untagged
@@ -4114,6 +4116,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1102616573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102616571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477fd20d557d09c48be183d834a95f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiParent: {fileID: 1072564060}
+  effectSoundBt: {fileID: 1117231079}
+  musicBt: {fileID: 1671330731}
+  backBt: {fileID: 1031260624}
 --- !u!1 &1117231077
 GameObject:
   m_ObjectHideFlags: 0
@@ -6284,7 +6302,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 269885879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1658659192
 MonoBehaviour:
@@ -6300,7 +6318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitingToStartDuration: 1
   countDownToStartDuration: 3
-  gamePlayingDuration: 30
+  gamePlayingDuration: 60
 --- !u!1 &1671330729
 GameObject:
   m_ObjectHideFlags: 0
@@ -7002,6 +7020,7 @@ MonoBehaviour:
   continueBt: {fileID: 1294995172}
   toMenuBt: {fileID: 1486735024}
   restartBt: {fileID: 1272137232}
+  settingBt: {fileID: 1536761407}
 --- !u!1 &1770484140
 GameObject:
   m_ObjectHideFlags: 0
@@ -8214,7 +8233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9607843}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8389,4 +8408,3 @@ SceneRoots:
   - {fileID: 1732167460}
   - {fileID: 87888261}
   - {fileID: 269885879}
-  - {fileID: 1658659191}
