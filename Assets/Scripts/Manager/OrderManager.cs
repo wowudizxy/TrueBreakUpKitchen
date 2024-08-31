@@ -23,6 +23,10 @@ public class OrderManager : MonoBehaviour
     {
         GameManager.Instance.OnGamePlayingStarted += GameManager_OnGamePlayingStarted;
     }
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnGamePlayingStarted -= GameManager_OnGamePlayingStarted;
+    }
 
     private void GameManager_OnGamePlayingStarted(object sender, EventArgs e)
     {

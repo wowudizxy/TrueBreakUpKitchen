@@ -14,4 +14,8 @@ public class TrashCounter : BaseCounter
             player.DestroyKitchenObject();
         }
     }
+    public static void ClearStaticData()
+    {
+        Trash = null;
+    }
 }

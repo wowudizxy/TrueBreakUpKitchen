@@ -13,14 +13,14 @@ public class LoadingUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI LoadingText;
     int coinCount = 0;
     int count = 0;
-    float startTime = 24;
+    float startTime = 6;
     private void Start()
     {
         Food.Foodcaught += Food_Foodcaught;
         StartCoroutine(CycleSymbol());
         StartBt.onClick.AddListener(() =>
         {
-            Loader.LoadBack();
+            Loader.Load(Loader.Scene.GameScene);
         });
     }
 

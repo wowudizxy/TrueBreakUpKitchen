@@ -23,14 +23,23 @@ public class GameInput : MonoBehaviour
         gameContral.Player.Pause.performed += Pause_performed;
         gameContral.Player2d.Enable();
     }
+    private void OnDestroy()
+    {
+        gameContral.Player.Interact.performed -= Interact_performed;//检测按钮按下的事件
+        gameContral.Player.Operate.performed -= Operate_performed;
+        gameContral.Player.Pause.performed -= Pause_performed;
+        gameContral.Dispose();
+    }
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        print("Pause_performed");
         PauseHandler?.Invoke(this, EventArgs.Empty);
     }
 
     private void Operate_performed (UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+
         OperateHandler?.Invoke(this,EventArgs.Empty);
     }
 

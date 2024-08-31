@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
+    private GameInput gameInput;
     [SerializeField] private float waitingToStartDuration = 3f;
     [SerializeField] private float countDownToStartDuration = 3f;
     [SerializeField] private float gamePlayingDuration = 3f;
-
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnPaused;
     public event EventHandler OnCountDownStarted;
     public event EventHandler OnGamePlayingStarted;
     public event EventHandler OnGameOverStarted;
@@ -32,28 +34,26 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+       //DontDestroyOnLoad(gameObject);
         state = State.WaitingToStart;
+
     }
 
     private void Start()
     {
+        gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
         StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
-        GameInput.Instance.PauseHandler += GameInput_PauseHandler;
+        gameInput.PauseHandler += GameInput_PauseHandler;
+    }
+    private void OnDestroy()
+    {
+        gameInput.PauseHandler -= GameInput_PauseHandler;
     }
 
     private void GameInput_PauseHandler(object sender, EventArgs e)
     {
-        isPasue = !isPasue;
-        if (isPasue)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
-        
+        print("GameInput_PauseHandler");
+        SwitchPause();
     }
 
     private IEnumerator StateTimer(float duration, Action onComplete)
@@ -126,5 +126,20 @@ public class GameManager : MonoBehaviour
     public bool IsGamePlaying()
     {
         return state ==State.GamePlaying;
+    }
+    public void SwitchPause()
+    {
+        print("SwitchPause");
+        isPasue = !isPasue;
+        if (isPasue)
+        {
+            Time.timeScale = 0;
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            OnGameUnPaused?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

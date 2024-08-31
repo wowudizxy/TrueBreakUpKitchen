@@ -14,6 +14,10 @@ public class GameOverUI : MonoBehaviour
     {
         GameManager.Instance.OnGameOverStarted += GameManager_OnGameOverStarted;
     }
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnGameOverStarted -= GameManager_OnGameOverStarted;
+    }
 
     private void GameManager_OnGameOverStarted(object sender, System.EventArgs e)
     {

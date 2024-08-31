@@ -11,7 +11,10 @@ public class OrderListUI : MonoBehaviour
     {
         OrderManager.Instance.UpdateOrderRecipe += Instance_HaveNewOrderRecipe;
     }
-
+    private void OnDestroy()
+    {
+        OrderManager.Instance.UpdateOrderRecipe -= Instance_HaveNewOrderRecipe;
+    }
     private void Instance_HaveNewOrderRecipe(object sender, System.EventArgs e)
     {
         UpdateOrderListUI(OrderManager.Instance.GetExistOrderList());
@@ -33,4 +36,5 @@ public class OrderListUI : MonoBehaviour
             recipeUI.UpdateDetailUI(recipeSO);
         }
     }
+    
 }

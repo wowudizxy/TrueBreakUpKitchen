@@ -31,6 +31,11 @@ public class Player : KitchenObjectHolder
         gameInput.InteractHandler += GameInput_InteractHandler;//3订阅这个事件InteractHandler，当事件被触发时调用GameInput_InteractHandler方法
         gameInput.OperateHandler += GameInput_OperateHandler;
     }
+    private void OnDestroy()
+    {
+        gameInput.InteractHandler -= GameInput_InteractHandler;
+        gameInput.OperateHandler -= GameInput_OperateHandler;
+    }
 
     private void GameInput_OperateHandler (object sender, EventArgs e)
     {

@@ -38,5 +38,9 @@ public class CountDownUI : MonoBehaviour
                 StartIcon.SetActive(false);
             });
     }
-    
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnCountDownStarted -= GameManager_IntoCountDown;
+    }
+
 }

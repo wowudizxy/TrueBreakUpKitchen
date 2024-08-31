@@ -33,4 +33,8 @@ public class PlayerSound : MonoBehaviour
     {
         PlayerStepSound?.Invoke(this, EventArgs.Empty);
     }
+    public static void ClearStaticData()
+    {
+        PlayerStepSound = null;
+    }
 }

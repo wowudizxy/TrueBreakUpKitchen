@@ -80,4 +80,9 @@ public class KitchenObjectHolder : MonoBehaviour
     {
         GetKitchenObject().TryGetComponent<PlatesCounter>();
     }*/
+    public static void ClearStaticData()
+    {
+        PickUP = null;
+        Drop = null;
+    }
 }

@@ -14,13 +14,11 @@ public static class Loader
 
     private static Scene scene;
 
-    public static void LoadingScene(Scene Target)
+    public static void Load(Scene Target)
     {
+        Time.timeScale = 1;
         scene = Target;
-        SceneManager.LoadScene((int)Scene.GameLoading);
+        SceneManager.LoadScene((int)Target);
     }
-    public static void LoadBack()
-    {
-        SceneManager.LoadScene((int)Scene.GameScene);
-    }
+    
 }
