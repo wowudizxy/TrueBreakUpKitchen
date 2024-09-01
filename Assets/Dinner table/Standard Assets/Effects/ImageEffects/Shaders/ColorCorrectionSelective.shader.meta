@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: e515e0f94cefc4c0db54b45cba621544
+ShaderImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55180
+  packageName: Dinner Table
+  packageVersion: 1.0
+  assetPath: Assets/Dinner table/Standard Assets/Effects/ImageEffects/Shaders/ColorCorrectionSelective.shader
+  uploadId: 172169

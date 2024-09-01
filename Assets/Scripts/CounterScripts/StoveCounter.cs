@@ -10,6 +10,7 @@ public class StoveCounter : BaseCounter
     [SerializeField] private StoveCounterVisual counterVisual;
     private float FryingTimer = 0;
     private FryingRecipe fryingRecipe;
+    private bool isinPausePlay;
     public enum StoveState
     {
         Idle,
@@ -20,6 +21,29 @@ public class StoveCounter : BaseCounter
     private StoveState state = StoveState.Idle;
     [SerializeField] private FryingRecipeListSO fryingRecipeList;
     [SerializeField] private FryingRecipeListSO burningRecipeList;
+    private void Start()
+    {
+        GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
+        GameManager.Instance.OnGameUnPaused += GameManager_OnGameUnPaused;
+    }
+
+    private void GameManager_OnGameUnPaused(object sender, System.EventArgs e)
+    {
+        if (isinPausePlay)
+        {
+            stoveSound.Play();
+        }
+    }
+
+    private void GameManager_OnGamePaused(object sender, System.EventArgs e)
+    {
+        isinPausePlay = stoveSound.isPlaying;
+        if (stoveSound.isPlaying)
+        {
+            stoveSound.Pause();
+        }
+    }
+
     private void Update()
     {
         switch (state)
@@ -138,10 +162,10 @@ public class StoveCounter : BaseCounter
         FryingTimer = 0;
         state = tragetState;
     }
-    public void PlaySoundStove()
+    public  void PlaySoundStove()
     {
         stoveSound.Play();
     }
-    public void StopSoundStove() 
+    public  void StopSoundStove() 
     {  stoveSound.Pause(); }
 }

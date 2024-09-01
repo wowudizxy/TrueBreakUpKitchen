@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: be6e39cf196f146d5be72fbefb18ed75
+ShaderImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55180
+  packageName: Dinner Table
+  packageVersion: 1.0
+  assetPath: Assets/Dinner table/Standard Assets/Effects/ImageEffects/Shaders/_BloomAndFlares/BlurAndFlares.shader
+  uploadId: 172169

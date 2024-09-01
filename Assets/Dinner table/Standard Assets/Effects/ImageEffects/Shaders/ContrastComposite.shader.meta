@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 273404942eede4ea1883ca1fb2942507
+ShaderImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55180
+  packageName: Dinner Table
+  packageVersion: 1.0
+  assetPath: Assets/Dinner table/Standard Assets/Effects/ImageEffects/Shaders/ContrastComposite.shader
+  uploadId: 172169

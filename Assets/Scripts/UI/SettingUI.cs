@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class SettingUI : MonoBehaviour
 {
+    [SerializeField] private GameObject tip;
     [SerializeField] private GameObject uiParent;
     [SerializeField] private Button effectSoundBt;
     [SerializeField] private Button musicBt;
@@ -53,33 +54,44 @@ public class SettingUI : MonoBehaviour
         });
         upBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Up);
+            ReBinding(GameInput.BindingType.Up);
         });
         downBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Down);
+            ReBinding(GameInput.BindingType.Down);
         });
         leftBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Left);
+            ReBinding(GameInput.BindingType.Left);
         });
         rightBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Right);
+            ReBinding(GameInput.BindingType.Right);
         });
         interactBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Interact);
+            ReBinding(GameInput.BindingType.Interact);
         });
         operateBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Operate);
+            ReBinding(GameInput.BindingType.Operate);
         });
         pauseBt.onClick.AddListener(() =>
         {
-            GameInput.Instance.ReBinding(GameInput.BindingType.Pause);
+            ReBinding(GameInput.BindingType.Pause);
         });
     }
+
+    private void ReBinding(GameInput.BindingType bindingType)
+    {
+        tip.SetActive(true);
+        GameInput.Instance.ReBinding(bindingType, () =>
+        {
+            tip.SetActive(false);
+            UpdateVisual();
+        });
+    }
+
     public void Show()
     {
         print("setShow");

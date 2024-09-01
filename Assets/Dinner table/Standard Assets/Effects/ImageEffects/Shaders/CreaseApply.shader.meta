@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: b59984d82af624bd3b0c777f038276f2
+ShaderImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55180
+  packageName: Dinner Table
+  packageVersion: 1.0
+  assetPath: Assets/Dinner table/Standard Assets/Effects/ImageEffects/Shaders/CreaseApply.shader
+  uploadId: 172169

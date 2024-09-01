@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+    public const string GAMEINPUT_BINDINGS = "GameInputBindings";
     public static GameInput Instance { get; private set; }
     public event EventHandler PauseHandler;
     public event EventHandler OperateHandler;
@@ -19,6 +20,7 @@ public class GameInput : MonoBehaviour
     {
         Instance = this;
         gameContral = new GameControl();
+        gameContral.LoadBindingOverridesFromJson(PlayerPrefs.GetString(GAMEINPUT_BINDINGS));
         gameContral.Player.Enable();
         gameContral.Player.Interact.performed += Interact_performed;//检测按钮按下的事件
         gameContral.Player.Operate.performed += Operate_performed;
@@ -36,7 +38,7 @@ public class GameInput : MonoBehaviour
         gameContral.Player.Pause.performed -= Pause_performed;
         gameContral.Dispose();
     }
-    public void ReBinding(BindingType bindingType)
+    public void ReBinding(BindingType bindingType,Action onComplete)
     {
         gameContral.Player.Disable();
         InputAction inputAction = null;
@@ -78,6 +80,9 @@ public class GameInput : MonoBehaviour
         {
             CallBack.Dispose();
             gameContral.Player.Enable();
+            PlayerPrefs.SetString(GAMEINPUT_BINDINGS, gameContral.SaveBindingOverridesAsJson());
+            PlayerPrefs.Save();
+            onComplete?.Invoke();
         }).Start();
     }
     public string GetBindingType(BindingType bindingType)

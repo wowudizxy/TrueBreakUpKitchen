@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 459fe69d2f6d74ddb92f04dbf45a866b
+ShaderImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55180
+  packageName: Dinner Table
+  packageVersion: 1.0
+  assetPath: Assets/Dinner table/Standard Assets/Effects/ImageEffects/Shaders/_BloomAndFlares/LensFlareCreate.shader
+  uploadId: 172169
