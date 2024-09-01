@@ -51,6 +51,34 @@ public class SettingUI : MonoBehaviour
         {
             Hide();
         });
+        upBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Up);
+        });
+        downBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Down);
+        });
+        leftBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Left);
+        });
+        rightBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Right);
+        });
+        interactBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Interact);
+        });
+        operateBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Operate);
+        });
+        pauseBt.onClick.AddListener(() =>
+        {
+            GameInput.Instance.ReBinding(GameInput.BindingType.Pause);
+        });
     }
     public void Show()
     {

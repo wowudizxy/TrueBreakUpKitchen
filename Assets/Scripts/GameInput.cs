@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
@@ -34,6 +35,50 @@ public class GameInput : MonoBehaviour
         gameContral.Player.Operate.performed -= Operate_performed;
         gameContral.Player.Pause.performed -= Pause_performed;
         gameContral.Dispose();
+    }
+    public void ReBinding(BindingType bindingType)
+    {
+        gameContral.Player.Disable();
+        InputAction inputAction = null;
+        int index = -1;
+        switch (bindingType)
+        {
+            case BindingType.Up:
+                index = 1;
+                inputAction = gameContral.Player.Move;
+                break;
+            case BindingType.Down:
+                index = 2;
+                inputAction = gameContral.Player.Move;
+                break;
+            case BindingType.Left:
+                index = 3;
+                inputAction = gameContral.Player.Move;
+                break;
+            case BindingType.Right:
+                index = 4;
+                inputAction = gameContral.Player.Move;
+                break;
+            case BindingType.Interact:
+                index = 0;
+                inputAction = gameContral.Player.Interact;
+                break;
+            case BindingType.Operate:
+                index = 0;
+                inputAction = gameContral.Player.Operate;
+                break;
+            case BindingType.Pause:
+                index = 0;
+                inputAction = gameContral.Player.Pause;
+                break;
+            default:
+                break;
+        }
+        inputAction.PerformInteractiveRebinding(index).OnComplete(CallBack =>
+        {
+            CallBack.Dispose();
+            gameContral.Player.Enable();
+        }).Start();
     }
     public string GetBindingType(BindingType bindingType)
     {
