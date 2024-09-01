@@ -29,7 +29,7 @@ public class GamePauseUI : MonoBehaviour
         });
         settingBt.onClick.AddListener(() =>
         {
-            OnSettingUI?.Invoke(this,EventArgs.Empty);
+            OnSettingUI?.Invoke(this, EventArgs.Empty);
         });
         toMenuBt.onClick.AddListener(() =>
         {
@@ -75,5 +75,8 @@ public class GamePauseUI : MonoBehaviour
         GameManager.Instance.OnGameUnPaused -= GameManager_OnGameUnPaused;
     }
 
-
+    public static void ClearStaticData()
+    {
+        OnSettingUI = null;
+    }
 }

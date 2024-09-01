@@ -10,6 +10,6 @@ public class ClearStaticData : MonoBehaviour
         TrashCounter.ClearStaticData();
         PlayerSound.ClearStaticData();
         KitchenObjectHolder.ClearStaticData();
-
+        GamePauseUI.ClearStaticData();
     }
 }

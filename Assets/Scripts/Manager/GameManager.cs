@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnGamePlayingStarted;
     public event EventHandler OnGameOverStarted;
     private bool isPasue = false;
+    private bool isActive = true;
     public enum State
     {
         WaitingToStart,
@@ -52,8 +53,11 @@ public class GameManager : MonoBehaviour
 
     private void GameInput_PauseHandler(object sender, EventArgs e)
     {
-        if (SettingUI.IsActive == true)
+        print("GameInput_PauseHandler");
+        print(isActive);
+        if (isActive==true)
         {
+            print("SwitchPause");
             SwitchPause();
         }
     }
@@ -143,5 +147,9 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             OnGameUnPaused?.Invoke(this, EventArgs.Empty);
         }
+    }
+    public void SetIsPauseActive(bool isOpen)
+    {
+        isActive  = isOpen;
     }
 }

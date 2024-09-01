@@ -51,6 +51,7 @@ public class MusicManager : MonoBehaviour
     private void SaveVolume()
     {
         PlayerPrefs.SetInt(MUSICMANAGER_VOLUME, volume);
+        
     }
     private void SetVolume()
     {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SettingUI : MonoBehaviour
@@ -13,22 +14,38 @@ public class SettingUI : MonoBehaviour
     [SerializeField] private Button backBt;
     [SerializeField] private TextMeshProUGUI effectSoundText;
     [SerializeField] private TextMeshProUGUI musicText;
-    public static bool IsActive { get; private set; }
+
+    [SerializeField] private Button upBt;
+    [SerializeField] private Button downBt;
+    [SerializeField] private Button leftBt;
+    [SerializeField] private Button rightBt;
+    [SerializeField] private Button interactBt;
+    [SerializeField] private Button operateBt;
+    [SerializeField] private Button pauseBt;
+
+    [SerializeField] private TextMeshProUGUI upText;
+    [SerializeField] private TextMeshProUGUI downText;
+    [SerializeField] private TextMeshProUGUI leftText;
+    [SerializeField] private TextMeshProUGUI rightText;
+    [SerializeField] private TextMeshProUGUI interactText;
+    [SerializeField] private TextMeshProUGUI operateText;
+    [SerializeField] private TextMeshProUGUI pauseText;
+    
     private void Start()
     {
         Hide();
-        UpdateSoundText();
+        UpdateVisual();
         GamePauseUI.OnSettingUI += GamePauseUI_OnSettingUI;
         effectSoundBt.onClick.AddListener(() =>
         {
             
             SoundManager.Instance.ChangeVolume();
-            UpdateSoundText();
+            UpdateVisual();
         });
         musicBt.onClick.AddListener(() =>
         {
             MusicManager.Instance.ChangeVolume();
-            UpdateSoundText();
+            UpdateVisual();
         });
         backBt.onClick.AddListener(() =>
         {
@@ -37,23 +54,33 @@ public class SettingUI : MonoBehaviour
     }
     public void Show()
     {
+        print("setShow");
         uiParent.SetActive(true);
-        IsActive = false;
+        GameManager.Instance.SetIsPauseActive(false);
     }
 
     private void GamePauseUI_OnSettingUI(object sender, EventArgs e)
     {
+        print("GamePauseUI_OnSettingUI");
         Show();
     }
 
     public void Hide()
     {
         uiParent?.SetActive(false);
-        IsActive = true;
+        GameManager.Instance.SetIsPauseActive(true);
     }
-    private void UpdateSoundText()
+    private void UpdateVisual()
     {
         effectSoundText.text = "音效大小："+SoundManager.Instance.GetVolume();
         musicText.text = "音乐大小："+MusicManager.Instance.GetVolume();
+        upText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Up);
+        downText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Down);
+        leftText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Left);
+        rightText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Right);
+        interactText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Interact);
+        operateText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Operate);
+        pauseText.text = GameInput.Instance.GetBindingType(GameInput.BindingType.Pause);
     }
+    
 }
