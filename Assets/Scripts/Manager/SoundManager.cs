@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance {  get; private set; }
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
-    private int volume = 0;
+    private int volume = 5;
     private void Awake()
     {
         Instance = this;
@@ -62,7 +62,7 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(audioClip, Camera.main.transform.position);
         
     }
-    public void PlaySound(List<AudioClip> audioClipList, float volumeMutipler = 0.1f)
+    public void PlaySound(List<AudioClip> audioClipList, float volumeMutipler = 0.5f)
     {
         int index = Random.Range(0, audioClipList.Count);
         AudioSource.PlayClipAtPoint(audioClipList[index],Camera.main.transform.position, volumeMutipler*(volume/10.0f));
@@ -70,11 +70,16 @@ public class SoundManager : MonoBehaviour
     }
     public void ChangeVolume()
     {
-        volume++;
+        
         if(volume > 10)
         {
             volume = 0;
         }
+        volume++;
+    }
+    public int GetVolume()
+    {
+        return volume;
     }
 
     /*public void PlaySound(List<AudioClip> audioClipList,Vector3 position,float volume = 1.0f)

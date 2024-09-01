@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,14 +11,16 @@ public class SettingUI : MonoBehaviour
     [SerializeField] private Button effectSoundBt;
     [SerializeField] private Button musicBt;
     [SerializeField] private Button backBt;
-
+    [SerializeField] private TextMeshProUGUI effectSoundText;
     public static bool IsActive { get; private set; }
     private void Start()
     {
         Hide();
+        UpdateSoundText();
         GamePauseUI.OnSettingUI += GamePauseUI_OnSettingUI;
         effectSoundBt.onClick.AddListener(() =>
         {
+            UpdateSoundText();
             SoundManager.Instance.ChangeVolume();
         });
         musicBt.onClick.AddListener(() =>
@@ -44,5 +47,9 @@ public class SettingUI : MonoBehaviour
     {
         uiParent?.SetActive(false);
         IsActive = true;
+    }
+    private void UpdateSoundText()
+    {
+        effectSoundText.text = "“Ù–ß¥Û–°£∫"+SoundManager.Instance.GetVolume().ToString();
     }
 }
