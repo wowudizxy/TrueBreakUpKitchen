@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float waitingToStartDuration = 3f;
     [SerializeField] private float countDownToStartDuration = 3f;
     [SerializeField] private float gamePlayingDuration = 3f;
+    private float gamePlayingtimer = 0;
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnPaused;
+    public event EventHandler OnWaitingToStarted;
     public event EventHandler OnCountDownStarted;
     public event EventHandler OnGamePlayingStarted;
     public event EventHandler OnGameOverStarted;
@@ -35,16 +37,24 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-       //DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         state = State.WaitingToStart;
 
     }
+
 
     private void Start()
     {
         gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
         StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
         gameInput.PauseHandler += GameInput_PauseHandler;
+    }
+    private void Update()
+    {
+        if (IsGamePlaying())
+        {
+            gamePlayingtimer += Time.deltaTime;
+        }
     }
     private void OnDestroy()
     {
@@ -55,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         print("GameInput_PauseHandler");
         print(isActive);
-        if (isActive==true)
+        if (isActive == true)
         {
             print("SwitchPause");
             SwitchPause();
@@ -76,6 +86,7 @@ public class GameManager : MonoBehaviour
         {
             case State.WaitingToStart:
                 OnWaitingToStart();
+                OnWaitingToStarted?.Invoke(this, EventArgs.Empty);
                 StartCoroutine(StateTimer(waitingToStartDuration, () => ConvertState(State.CountDownToStart)));
                 break;
 
@@ -131,11 +142,11 @@ public class GameManager : MonoBehaviour
     }
     public bool IsGamePlaying()
     {
-        return state ==State.GamePlaying;
+        return state == State.GamePlaying;
     }
     public void SwitchPause()
     {
-        
+
         isPasue = !isPasue;
         if (isPasue)
         {
@@ -150,6 +161,18 @@ public class GameManager : MonoBehaviour
     }
     public void SetIsPauseActive(bool isOpen)
     {
-        isActive  = isOpen;
+        isActive = isOpen;
+    }
+    public float GetGamePlayingtimer()
+    {
+        return gamePlayingDuration- gamePlayingtimer;
+    }
+    public float GetGamePlayingTimerNormalzed()
+    {
+        return gamePlayingtimer / gamePlayingDuration;
+    }
+    public bool IsWaiting()
+    {
+        return state == State.WaitingToStart;
     }
 }
