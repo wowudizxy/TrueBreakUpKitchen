@@ -5,12 +5,14 @@ using UnityEngine.UIElements;
 
 public class SoundManager : MonoBehaviour
 {
+    private const string SOUNDMANAGER_VOLUME = "SoundManagerVolume";
     public static SoundManager Instance {  get; private set; }
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
     private int volume = 5;
     private void Awake()
     {
         Instance = this;
+        SetVolume();
     }
     private void Start()
     {
@@ -64,9 +66,9 @@ public class SoundManager : MonoBehaviour
     }
     public void PlaySound(List<AudioClip> audioClipList, float volumeMutipler = 0.5f)
     {
+        if(volume ==0) return;
         int index = Random.Range(0, audioClipList.Count);
         AudioSource.PlayClipAtPoint(audioClipList[index],Camera.main.transform.position, volumeMutipler*(volume/10.0f));
-
     }
     public void ChangeVolume()
     {
@@ -75,11 +77,19 @@ public class SoundManager : MonoBehaviour
         {
             volume = 0;
         }
-        
+        SaveVolume();
     }
     public int GetVolume()
     {
         return volume;
+    }
+    private void SaveVolume()
+    {
+        PlayerPrefs.SetInt(SOUNDMANAGER_VOLUME, volume);
+    }
+    private void SetVolume()
+    {
+        volume = PlayerPrefs.GetInt(SOUNDMANAGER_VOLUME, volume);
     }
 
     /*public void PlaySound(List<AudioClip> audioClipList,Vector3 position,float volume = 1.0f)

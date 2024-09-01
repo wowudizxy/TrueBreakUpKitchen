@@ -12,6 +12,7 @@ public class SettingUI : MonoBehaviour
     [SerializeField] private Button musicBt;
     [SerializeField] private Button backBt;
     [SerializeField] private TextMeshProUGUI effectSoundText;
+    [SerializeField] private TextMeshProUGUI musicText;
     public static bool IsActive { get; private set; }
     private void Start()
     {
@@ -26,7 +27,8 @@ public class SettingUI : MonoBehaviour
         });
         musicBt.onClick.AddListener(() =>
         {
-
+            MusicManager.Instance.ChangeVolume();
+            UpdateSoundText();
         });
         backBt.onClick.AddListener(() =>
         {
@@ -51,6 +53,7 @@ public class SettingUI : MonoBehaviour
     }
     private void UpdateSoundText()
     {
-        effectSoundText.text = "音效大小："+SoundManager.Instance.GetVolume().ToString();
+        effectSoundText.text = "音效大小："+SoundManager.Instance.GetVolume();
+        musicText.text = "音乐大小："+MusicManager.Instance.GetVolume();
     }
 }

@@ -96,7 +96,7 @@ public class CuttingCounter : BaseCounter
         }
         
     }
-    public static void ClearStaticData()
+    public static new void ClearStaticData()
     {
         OnCut = null;
     }
