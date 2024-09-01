@@ -20,8 +20,9 @@ public class SettingUI : MonoBehaviour
         GamePauseUI.OnSettingUI += GamePauseUI_OnSettingUI;
         effectSoundBt.onClick.AddListener(() =>
         {
-            UpdateSoundText();
+            
             SoundManager.Instance.ChangeVolume();
+            UpdateSoundText();
         });
         musicBt.onClick.AddListener(() =>
         {

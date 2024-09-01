@@ -70,12 +70,12 @@ public class SoundManager : MonoBehaviour
     }
     public void ChangeVolume()
     {
-        
-        if(volume > 10)
+        volume++;
+        if (volume > 10)
         {
             volume = 0;
         }
-        volume++;
+        
     }
     public int GetVolume()
     {

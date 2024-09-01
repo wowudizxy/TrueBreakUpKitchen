@@ -4132,6 +4132,7 @@ MonoBehaviour:
   effectSoundBt: {fileID: 1117231079}
   musicBt: {fileID: 1671330731}
   backBt: {fileID: 1031260624}
+  effectSoundText: {fileID: 425426858}
 --- !u!1 &1117231077
 GameObject:
   m_ObjectHideFlags: 0
