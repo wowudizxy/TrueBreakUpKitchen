@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CountDownUI : MonoBehaviour
 {
-    
+    public static event EventHandler OnCountDownWarning;
     [SerializeField] private GameObject PrePareIcon;
     [SerializeField] private GameObject StartIcon;
     private void Start()
@@ -23,6 +23,7 @@ public class CountDownUI : MonoBehaviour
         PrePareIcon.SetActive(true);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(PrePareIcon.transform.DOScale(0, 0.4f).From())
+            .OnStart(() => OnCountDownWarning?.Invoke(this, EventArgs.Empty))
             .AppendInterval(1)
             .Append(PrePareIcon.transform.DOScale(0, 0.2f))
             .AppendCallback(() =>
@@ -31,6 +32,10 @@ public class CountDownUI : MonoBehaviour
                 StartIcon.SetActive(true);
             })
             .Append(StartIcon.transform.DOScale(0, 0.2f).From())
+            .AppendCallback(() =>
+            {
+                OnCountDownWarning?.Invoke(this, EventArgs.Empty);
+            })
             .AppendInterval(1)
             .Append(StartIcon.transform.DOScale(0, 0.2f))
             .AppendCallback(() =>
@@ -41,6 +46,10 @@ public class CountDownUI : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.Instance.OnCountDownStarted -= GameManager_IntoCountDown;
+    }
+    public static void ClearStaticData()
+    {
+        OnCountDownWarning = null;
     }
 
 }

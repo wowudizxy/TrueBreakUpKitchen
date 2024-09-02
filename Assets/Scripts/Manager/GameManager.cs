@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
+    private Coroutine stateTimerCoroutine;
     public static GameManager Instance { get; private set; }
     private GameInput gameInput;
     [SerializeField] private float waitingToStartDuration = 3f;
@@ -46,9 +47,23 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
-        StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
+        stateTimerCoroutine= StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
         gameInput.PauseHandler += GameInput_PauseHandler;
+        gameInput.InteractHandler += GameInput_InteractHandler;
     }
+
+    private void GameInput_InteractHandler(object sender, EventArgs e)
+    {
+        if(state == State.WaitingToStart)
+        {
+            if (stateTimerCoroutine != null)
+            {
+                StopCoroutine(stateTimerCoroutine);
+            }
+            ConvertState(State.CountDownToStart);
+        }
+    }
+
     private void Update()
     {
         if (IsGamePlaying())
@@ -80,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     private void ConvertState(State newState)
     {
+        StopAllCoroutines();
         state = newState;
 
         switch (state)

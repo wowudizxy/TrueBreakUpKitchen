@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class SoundManager : MonoBehaviour
 {
     private const string SOUNDMANAGER_VOLUME = "SoundManagerVolume";
-    public static SoundManager Instance {  get; private set; }
+    public static SoundManager Instance { get; private set; }
     [SerializeField] private AudioClipRefsSO audioClipRefsSO;
     private int volume = 5;
     private void Awake()
@@ -23,13 +23,22 @@ public class SoundManager : MonoBehaviour
         KitchenObjectHolder.Drop += KitchenObjectHolder_Drop;
         KitchenObjectHolder.PickUP += KitchenObjectHolder_PickUP;
         TrashCounter.Trash += TrashCounter_Trash;
+        CountDownUI.OnCountDownWarning += CountDownUI_OnCountDownWarning;
+    }
+
+    public void WarningSound()
+    {
+        PlaySound(audioClipRefsSO.warning);
+    }
+    private void CountDownUI_OnCountDownWarning(object sender, System.EventArgs e)
+    {
+        PlaySound(audioClipRefsSO.warning);
     }
 
     private void PlayerSound_PlayerStepSound(object sender, System.EventArgs e)
     {
         //PlaySound(audioClipRefsSO.foot_step, Player.Instance);
     }
-
     private void TrashCounter_Trash(object sender, System.EventArgs e)
     {
         PlaySound(audioClipRefsSO.trash);

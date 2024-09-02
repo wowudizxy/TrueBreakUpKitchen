@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 
 public class StoveCounter : BaseCounter
 {
+    [SerializeField] private WarningControl warningControl;
     [SerializeField] private AudioSource stoveSound;
     [SerializeField] private ProgressBarUI progressBarUI;
     [SerializeField] private StoveCounterVisual counterVisual;
@@ -50,6 +51,7 @@ public class StoveCounter : BaseCounter
         {
             case StoveState.Idle:
                 progressBarUI.Hide();
+                warningControl.Hide();
                 counterVisual.HideStoveEffect();
                 break;
             case StoveState.Frying:
@@ -73,6 +75,7 @@ public class StoveCounter : BaseCounter
                 FryingTimer += Time.deltaTime;
                 progressBarUI.UpdateProgress(FryingTimer/ fryingRecipe.fryingTime);
                 progressBarUI.SetColor(Color.Lerp(new Color(1.0f, 0.0f, 0.0f), new Color(1f, 1f, 0f), Mathf.PingPong(Time.time / 0.2f, 1.0f)));
+                warningControl.Show();
                 if (FryingTimer > fryingRecipe.fryingTime)
                 {
                     DestroyKitchenObject();
@@ -82,6 +85,7 @@ public class StoveCounter : BaseCounter
                 }
                 break;
             case StoveState.Burned:
+                warningControl.Hide();
                 progressBarUI.Hide();
                 counterVisual.HideStoveEffect();
                 break;

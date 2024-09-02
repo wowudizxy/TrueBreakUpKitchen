@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LoadingUI : MonoBehaviour
 {
+    public const string COIN_COUNT = "CoinCount";
     [SerializeField] private TextMeshProUGUI LoadingSymbol;
     [SerializeField] private int maxDots = 6; // 最大的点数
     [SerializeField] private float interval = 0.5f; // 每个点之间的时间间隔
@@ -12,10 +13,12 @@ public class LoadingUI : MonoBehaviour
     [SerializeField] private Button StartBt;
     [SerializeField] private TextMeshProUGUI LoadingText;
     int coinCount = 0;
-    int count = 0;
+    int Timer = 0;
     float startTime = 6;
     private void Start()
     {
+        coinCount = PlayerPrefs.GetInt(COIN_COUNT, coinCount);
+        coinCountText.text = "" + coinCount;
         Food.Foodcaught += Food_Foodcaught;
         StartCoroutine(CycleSymbol());
         StartBt.onClick.AddListener(() =>
@@ -28,16 +31,17 @@ public class LoadingUI : MonoBehaviour
     {
         coinCount++;
         coinCountText.text = "" + coinCount;
+        PlayerPrefs.SetInt(COIN_COUNT, coinCount);
     }
 
     IEnumerator CycleSymbol()
     {
         int dotCount = 0;
 
-        while (count!=startTime)
+        while (Timer!=startTime)
         {
-            count++;
-            if (count == startTime)
+            Timer++;
+            if (Timer == startTime)
             {
                 StartBt.gameObject.SetActive(true);
                 LoadingText.text = "加载完成";
