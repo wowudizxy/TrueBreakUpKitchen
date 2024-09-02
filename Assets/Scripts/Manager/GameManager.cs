@@ -47,10 +47,30 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameInput = GameObject.Find("GameInput").GetComponent<GameInput>();
-        stateTimerCoroutine= StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
+        stateTimerCoroutine = StartCoroutine(StateTimer(0, () => ConvertState(State.WaitingToStart)));
         gameInput.PauseHandler += GameInput_PauseHandler;
         gameInput.InteractHandler += GameInput_InteractHandler;
+        ItemCardUI.UseTimeCard += ItemCardUI_IncreaseTime;
     }
+
+    private void ItemCardUI_IncreaseTime(object sender, int extraTime)
+    {
+        if (IsGamePlaying())
+        {
+            if (stateTimerCoroutine != null)
+            {
+                StopCoroutine(stateTimerCoroutine);
+            }
+            gamePlayingtimer -= extraTime;
+            if (gamePlayingtimer < 0)
+            {
+                gamePlayingtimer = 0;
+            }
+            stateTimerCoroutine=StartCoroutine(StateTimer(GetGamePlayingtimer(), () => ConvertState(State.GameOver)));
+        }
+        
+    }
+
 
     private void GameInput_InteractHandler(object sender, EventArgs e)
     {
@@ -87,7 +107,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StateTimer(float duration, Action onComplete)
+    public IEnumerator StateTimer(float duration, Action onComplete)
     {
         yield return new WaitForSeconds(duration);
         onComplete?.Invoke();
@@ -103,19 +123,19 @@ public class GameManager : MonoBehaviour
             case State.WaitingToStart:
                 OnWaitingToStart();
                 OnWaitingToStarted?.Invoke(this, EventArgs.Empty);
-                StartCoroutine(StateTimer(waitingToStartDuration, () => ConvertState(State.CountDownToStart)));
+                stateTimerCoroutine =StartCoroutine(StateTimer(waitingToStartDuration, () => ConvertState(State.CountDownToStart)));
                 break;
 
             case State.CountDownToStart:
                 OnCountDownToStart();
                 OnCountDownStarted?.Invoke(this, EventArgs.Empty);
-                StartCoroutine(StateTimer(countDownToStartDuration, () => ConvertState(State.GamePlaying)));
+                stateTimerCoroutine = StartCoroutine(StateTimer(countDownToStartDuration, () => ConvertState(State.GamePlaying)));
                 break;
 
             case State.GamePlaying:
                 OnGamePlaying();
                 OnGamePlayingStarted?.Invoke(this, EventArgs.Empty);
-                StartCoroutine(StateTimer(gamePlayingDuration, () => ConvertState(State.GameOver)));
+                stateTimerCoroutine = StartCoroutine(StateTimer(gamePlayingDuration, () => ConvertState(State.GameOver)));
                 break;
 
             case State.GameOver:
