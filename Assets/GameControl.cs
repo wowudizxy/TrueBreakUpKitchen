@@ -62,6 +62,24 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TimeCard"",
+                    ""type"": ""Button"",
+                    ""id"": ""101751c6-654f-45ca-8467-208f1b1d0687"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CreateCard"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5101fa6-f735-4149-8c4f-3bc6b18d5caa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +225,28 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""421fcc89-0daa-494e-afda-dee981297368"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TimeCard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd5cd691-51fb-48bf-b266-592da0d5716d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CreateCard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -322,6 +362,8 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Operate = m_Player.FindAction("Operate", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_TimeCard = m_Player.FindAction("TimeCard", throwIfNotFound: true);
+        m_Player_CreateCard = m_Player.FindAction("CreateCard", throwIfNotFound: true);
         // Player2d
         m_Player2d = asset.FindActionMap("Player2d", throwIfNotFound: true);
         m_Player2d_Move = m_Player2d.FindAction("Move", throwIfNotFound: true);
@@ -391,6 +433,8 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Operate;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_TimeCard;
+    private readonly InputAction m_Player_CreateCard;
     public struct PlayerActions
     {
         private @GameControl m_Wrapper;
@@ -399,6 +443,8 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Operate => m_Wrapper.m_Player_Operate;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @TimeCard => m_Wrapper.m_Player_TimeCard;
+        public InputAction @CreateCard => m_Wrapper.m_Player_CreateCard;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -420,6 +466,12 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @TimeCard.started += instance.OnTimeCard;
+            @TimeCard.performed += instance.OnTimeCard;
+            @TimeCard.canceled += instance.OnTimeCard;
+            @CreateCard.started += instance.OnCreateCard;
+            @CreateCard.performed += instance.OnCreateCard;
+            @CreateCard.canceled += instance.OnCreateCard;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -436,6 +488,12 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @TimeCard.started -= instance.OnTimeCard;
+            @TimeCard.performed -= instance.OnTimeCard;
+            @TimeCard.canceled -= instance.OnTimeCard;
+            @CreateCard.started -= instance.OnCreateCard;
+            @CreateCard.performed -= instance.OnCreateCard;
+            @CreateCard.canceled -= instance.OnCreateCard;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -513,6 +571,8 @@ public partial class @GameControl: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnOperate(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnTimeCard(InputAction.CallbackContext context);
+        void OnCreateCard(InputAction.CallbackContext context);
     }
     public interface IPlayer2dActions
     {

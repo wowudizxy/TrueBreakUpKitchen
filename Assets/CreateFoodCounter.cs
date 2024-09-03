@@ -7,7 +7,7 @@ public class CreateFoodCounter : ClearCounter
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
     private void Start()
     {
-        ItemCardUI.UseCreatMeatCard += ItemCardUI_UseCreatMeatCard;
+        ItemCardUI.UseCreateMeatCard += ItemCardUI_UseCreatMeatCard;
     }
 
     private void ItemCardUI_UseCreatMeatCard(object sender, System.EventArgs e)

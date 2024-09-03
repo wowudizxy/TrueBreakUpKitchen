@@ -1,24 +1,82 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemCardUI : MonoBehaviour
 {
-    public static event EventHandler<int> UseTimeCard; // 使用泛型事件来传递增加的时间
-    public static event EventHandler UseCreatMeatCard;
-    private int extraTime = 5; // 设置增加的时间为5秒
+    public const string TIME_CARD_COUNT = "TimeCardCount";
+    public const string CREATE_CARD_COUNT = "CreateCardCount";
+    public static event EventHandler<int> UseTimeCard;
+    public static event EventHandler UseCreateMeatCard;
+    private int extraTime = 5;
     [SerializeField] private Button extraTimeBt;
     [SerializeField] private Button createMeatBt;
+    [SerializeField] private TextMeshProUGUI extraTimeText;
+    [SerializeField] private TextMeshProUGUI createMeatText;
+    private int timeCardCount;
+    private int createCardcount;
 
+    [SerializeField] private CreateFoodCounter createFoodCounter;
     private void Start()
     {
-        extraTimeBt.onClick.AddListener(() =>
-        {
-            UseTimeCard?.Invoke(this, extraTime);
-        });
-        createMeatBt.onClick.AddListener(() =>
-        {
-            UseCreatMeatCard?.Invoke(this, EventArgs.Empty);
-        });
+        timeCardCount = PlayerPrefs.GetInt(TIME_CARD_COUNT, 0);
+        extraTimeText.text = "剩余：" + timeCardCount;
+        createCardcount = PlayerPrefs.GetInt(CREATE_CARD_COUNT, 0);
+        createMeatText.text = "剩余：" + createCardcount;
+        extraTimeBt.onClick.AddListener(OnUseTimeCard);
+        createMeatBt.onClick.AddListener(OnUseCreateMeatCard);
+
+        GameInput.Instance.TimeCardHandler += (sender, e) => OnUseTimeCard(); // 订阅 TimeCard 的输入事件
+        GameInput.Instance.CreateCardHandler += (sender, e) => OnUseCreateMeatCard(); // 订阅 CreateCard 的输入事件
+        ShopUI.ExchangeTime += ShopUI_ExchangeTime;
+        ShopUI.ExchangeCreation += ShopUI_ExchangeCreation;
     }
+
+    private void ShopUI_ExchangeCreation(object sender, EventArgs e)
+    {
+        createCardcount++;
+        PlayerPrefs.SetInt(TIME_CARD_COUNT, createCardcount);
+        createMeatText.text = "剩余：" + createCardcount;
+    }
+
+    private void ShopUI_ExchangeTime(object sender, EventArgs e)
+    {
+        timeCardCount++;
+        PlayerPrefs.SetInt(TIME_CARD_COUNT, timeCardCount);
+        extraTimeText.text = "剩余：" + timeCardCount;
+    }
+
+    private void OnUseTimeCard()
+    {
+        if (timeCardCount <= 0||!GameManager.Instance.IsGamePlaying())
+        {
+            return;
+        }
+        UseTimeCard?.Invoke(this, extraTime);
+        timeCardCount--;
+        PlayerPrefs.SetInt(TIME_CARD_COUNT, timeCardCount);
+        extraTimeText.text = "剩余：" + timeCardCount;
+    }
+
+    private void OnUseCreateMeatCard()
+    {
+        if (createCardcount <= 0|| createFoodCounter.GetKitchenObject()!=null||!GameManager.Instance.IsGamePlaying())
+        {
+            return;
+        }
+        UseCreateMeatCard?.Invoke(this, EventArgs.Empty);
+        createCardcount--;
+        PlayerPrefs.SetInt(CREATE_CARD_COUNT, createCardcount);
+        createMeatText.text = "剩余：" + createCardcount;
+        
+    }
+    public static void ClearStaticData()
+    {
+        UseTimeCard = null;
+        UseCreateMeatCard  =null;
+    }
+
+
+
 }

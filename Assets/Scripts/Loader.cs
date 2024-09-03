@@ -19,6 +19,17 @@ public static class Loader
         Time.timeScale = 1;
         scene = Target;
         SceneManager.LoadScene((int)Target);
+        ClearTotal();
+    }
+    private static void ClearTotal()
+    {
+        CuttingCounter.ClearStaticData();
+        TrashCounter.ClearStaticData();
+        PlayerSound.ClearStaticData();
+        KitchenObjectHolder.ClearStaticData();
+        GamePauseUI.ClearStaticData();
+        CountDownUI.ClearStaticData();
+        ItemCardUI.ClearStaticData();
     }
     
 }

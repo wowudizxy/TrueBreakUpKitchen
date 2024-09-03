@@ -12,5 +12,6 @@ public class ClearStaticData : MonoBehaviour
         KitchenObjectHolder.ClearStaticData();
         GamePauseUI.ClearStaticData();
         CountDownUI.ClearStaticData();
+        ItemCardUI.ClearStaticData();
     }
 }

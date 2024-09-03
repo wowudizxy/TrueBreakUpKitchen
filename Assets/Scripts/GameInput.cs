@@ -11,6 +11,8 @@ public class GameInput : MonoBehaviour
     public event EventHandler PauseHandler;
     public event EventHandler OperateHandler;
     public event EventHandler InteractHandler;//1声明一个用于交互的事件，event 关键字用来声明一个事件。事件是基于委托类型的，但与普通委托不同，事件只能在其定义的类中被触发（即调用），而其他类只能订阅（+=）或取消订阅（-=）这个事件。
+    public event EventHandler TimeCardHandler;  // 为 TimeCard 添加事件
+    public event EventHandler CreateCardHandler; // 为 CreateCard 添加事件
     private GameControl gameContral;
     public enum BindingType
     {
@@ -25,8 +27,13 @@ public class GameInput : MonoBehaviour
         gameContral.Player.Interact.performed += Interact_performed;//检测按钮按下的事件
         gameContral.Player.Operate.performed += Operate_performed;
         gameContral.Player.Pause.performed += Pause_performed;
+        gameContral.Player.TimeCard.performed += TimeCard_performed;
+        gameContral.Player.CreateCard.performed += CreateCard_performed;
         gameContral.Player2d.Enable();
     }
+
+    
+
     private void Start ()
     {
         
@@ -116,7 +123,15 @@ public class GameInput : MonoBehaviour
         }
         return temp;
     }
+    private void CreateCard_performed(InputAction.CallbackContext obj)
+    {
+        CreateCardHandler?.Invoke(this, EventArgs.Empty);
+    }
 
+    private void TimeCard_performed(InputAction.CallbackContext obj)
+    {
+        TimeCardHandler?.Invoke(this, EventArgs.Empty);
+    }
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         print("Pause_performed");

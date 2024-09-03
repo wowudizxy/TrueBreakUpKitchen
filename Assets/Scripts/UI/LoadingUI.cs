@@ -29,7 +29,7 @@ public class LoadingUI : MonoBehaviour
 
     private void Food_Foodcaught(object sender, System.EventArgs e)
     {
-        coinCount++;
+        coinCount+=2;
         coinCountText.text = "" + coinCount;
         PlayerPrefs.SetInt(COIN_COUNT, coinCount);
     }
