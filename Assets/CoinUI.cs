@@ -7,26 +7,33 @@ public class CoinUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinText;
     private int coinCount;
+
     private void Start()
     {
         UpdateCoinNumber();
-        ShopUI.ExchangeTime += ShopUI_ExchangeTime;
-        ShopUI.ExchangeCreation += ShopUI_ExchangeCreation;
+        ShopUI.ExchangeTime += OnExchangeTime;
+        ShopUI.ExchangeCreation += OnExchangeCreation;
     }
 
-    private void ShopUI_ExchangeCreation(object sender, System.EventArgs e)
+    private void OnDestroy()
+    {
+        ShopUI.ExchangeTime -= OnExchangeTime;
+        ShopUI.ExchangeCreation -= OnExchangeCreation;
+    }
+
+    private void OnExchangeTime(object sender, System.EventArgs e)
     {
         UpdateCoinNumber();
     }
 
-    private void ShopUI_ExchangeTime(object sender, System.EventArgs e)
+    private void OnExchangeCreation(object sender, System.EventArgs e)
     {
         UpdateCoinNumber();
     }
+
     private void UpdateCoinNumber()
     {
         coinCount = PlayerPrefs.GetInt(LoadingUI.COIN_COUNT, 0);
         coinText.text = coinCount.ToString();
     }
-
 }
